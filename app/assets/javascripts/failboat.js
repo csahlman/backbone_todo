@@ -4,7 +4,8 @@ window.Failboat = {
   Views: {},
   Routers: {},
   initialize: function() {
-    alert('Hello from Backbone!');
+    new Failboat.Routers.Tasks;
+    Backbone.history.start();
   }
 };
 
