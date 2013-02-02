@@ -1,7 +1,7 @@
-<%= task.get('name') %> | <%= task.get('done') %> | 
+<%= task.escape('name') %> | <%= task.escape('done') %> | 
 <% if(task.get('done') === true) { %>
   <a href="#" class="toggle">Mark as unfinished</a> |
-  <input type="checkbox" name="remove">
 <% } else { %>
   <a href="#" class="toggle">Mark as finished</a>
 <% } %>
+<input type="checkbox" name="remove">

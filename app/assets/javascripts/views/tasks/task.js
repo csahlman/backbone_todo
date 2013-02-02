@@ -29,8 +29,6 @@ Failboat.Views.Task = Backbone.View.extend({
 
   addToCorrectList: function() {
     $li = this.$el;
-    // console.log($li);
-    // this.$el.remove();
     if(this.model.isFinished()) {
       $li.addClass('finished');
       $li.appendTo('#finished');

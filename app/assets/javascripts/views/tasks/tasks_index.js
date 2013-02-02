@@ -8,13 +8,12 @@ Failboat.Views.TasksIndex = Backbone.View.extend({
   template: JST['tasks/index'],
 
   events: {
-    // 'click .done': 'toggleDone'
+    'submit #new_task': 'createNewTask'
   },
 
   initialize: function() {
     this.collection.on('reset', this.render, this);
-    // this.listenTo(this.model, 'change', this.render);
-    // this.collection.on('destroy', this.remove);
+    this.collection.on('add', this.render, this);
   },
 
   render: function() {
@@ -30,6 +29,19 @@ Failboat.Views.TasksIndex = Backbone.View.extend({
     } else {
       $('#tasks').append(view.render().el);
     }
+  },
+
+  createNewTask: function(event) {
+    event.preventDefault();
+    this.collection.create({name: $('#new_task_name').val(), done: false }, {
+      wait: true,
+      success: function() {
+        $('#new_task')[0].reset();
+      },
+      error: function() {
+        alert('error');
+      }
+    });
   }
 
 
