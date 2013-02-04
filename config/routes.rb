@@ -1,4 +1,7 @@
 Failboat::Application.routes.draw do
+  resources :comments
+
+
   resources :tasks
 
   root to: 'pages#index'
