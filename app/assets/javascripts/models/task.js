@@ -6,6 +6,11 @@ Failboat.Models.Task = Backbone.Model.extend({
     done: "false"
   },
 
+  change: function() {
+    console.log('here we go');
+    this.trigger('change');
+  },
+
   toggle: function() {
     this.save({
       done: !this.get('done')

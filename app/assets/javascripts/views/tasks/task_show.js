@@ -9,13 +9,15 @@ Failboat.Views.TaskShow = Backbone.View.extend({
     'dblclick #name_header': 'renderNameForm',
     'click .edit': 'renderForm',
     'submit #edit_description_form': 'editDescription',
-    'submit #edit_name_form': 'editName'
+    'submit #edit_name_form': 'editName',
+    'click .toggle': 'toggleDone'
   },
 
   initialize: function() {
     _.bindAll(this, 'render');
-    this.listenTo(this.model, 'change', this.render);
+    // this.listenTo(this.model, 'change', this.render);
     this.listenTo(this.model, 'destroy', this.remove);
+    this.model.on('change', this.render, this);
   },
 
   render: function() {
@@ -25,7 +27,6 @@ Failboat.Views.TaskShow = Backbone.View.extend({
 
   renderForm: function(event) {
     event.preventDefault();
-    $(this.el).undelegate('#name_header', 'dblclick');
     $('#edit_description').html(JST['tasks/edit_description_form']({task: this.model}));
   },
 
@@ -35,16 +36,18 @@ Failboat.Views.TaskShow = Backbone.View.extend({
 
   editDescription: function(event) {
     event.preventDefault();
-    this.model.set({'description': $('#edit_task_description').val()})
-    this.model.save({}, {
-      wait: true,
-      success: function() {
-        $('#edit_description_form').remove();
-      },
-      error: function() {
-        this.handleError;
-      }
-    });
+    // this.model.set({'description': $('#edit_task_description').val()});
+    this.model.save({'description': $('#edit_task_description').val()}); 
+    // {
+    //   wait: true
+    //   // success: function() {
+    //   //   $('#edit_description_form').remove();
+    //   // },
+    //   // error: function() {
+    //   //   console.log('in the error hander');
+    //   //   this.handleError();
+    //   // }
+    // });
   },
 
   handleError: function(entry, response) {
@@ -54,17 +57,22 @@ Failboat.Views.TaskShow = Backbone.View.extend({
 
   editName: function(event) {
     event.preventDefault();
-    console.log(this.model.toJSON());
-    this.model.set({'name': $('#edit_task_name').val()});
-    this.model.save({}, {
-      wait: true,
-      success: function() {
-        $('#edit_name_form').remove();
-      },
-      error: function() {
-        this.handleError;
-      }
-    });
+    this.model.save({'name': $('#edit_task_name').val()});
+    // this.model.save({
+    //   wait: true
+    //   // success: function() {
+    //   //   $('#edit_name_form').remove();
+    //   // },
+    //   // error: function() {
+    //   //   console.log('in the error hander');
+    //   //   this.handleError();
+    //   // }
+    // });
+  },
+
+  toggleDone: function(event) {
+    event.preventDefault();
+    this.model.toggle();
   }
 
 });

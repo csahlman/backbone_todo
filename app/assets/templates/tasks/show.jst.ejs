@@ -11,3 +11,9 @@
     <a href="#" class="edit">Edit</a>
   </span>
 <% } %>
+
+<% if(task.get('done') === true) { %>
+  <a href="#" class="toggle">Mark as unfinished</a>
+<% } else { %>
+  <a href="#" class="toggle">Mark as finished</a>
+<% } %>
