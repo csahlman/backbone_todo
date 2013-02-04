@@ -1,0 +1,16 @@
+#container {
+  width: 1000px;
+  position: relative;
+}
+
+#main {
+  width: 500px;
+  float: left;
+  border: 1px solid gray; 
+}
+
+#sidebar {
+  width: 480px;
+  float: left;
+  border: 1px solid gray;
+}

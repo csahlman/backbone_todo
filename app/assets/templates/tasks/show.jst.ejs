@@ -1,0 +1,13 @@
+<span id="name_header"><h1><%= task.escape('name') %></h1></span>
+
+<% if(task.escape('description').length === 0) { %>
+  <form id="edit_description_form">
+    <input type="text" name="description" id="edit_task_description">
+    <input type="submit" value="Edit Description">
+  </form>
+<% } else { %>
+  <span id="edit_description">
+    <%= task.escape('description') %> | 
+    <a href="#" class="edit">Edit</a>
+  </span>
+<% } %>

@@ -1,6 +1,4 @@
 Failboat.Views.TasksIndex = Backbone.View.extend({
-
-  tagName: 'span',
   id: 'main',
 
   // model: Failboat.Models.Task,
@@ -12,14 +10,19 @@ Failboat.Views.TasksIndex = Backbone.View.extend({
   },
 
   initialize: function() {
-    this.collection.on('reset', this.render, this);
-    this.collection.on('add', this.render, this);
-    this.collection.on('change', this.render, this);
+    _.bindAll(this, 'render');
+    this.listenTo(this.collection, 'change', this.render);
+    this.listenTo(this.collection, 'add', this.render);
+    this.listenTo(this.collection, 'reset', this.render);
+    // this.collection.on('reset', this.render, this);
+    // this.collection.on('add', this.render, this);
+    // this.collection.on('change', this.render, this);
   },
 
   render: function() {
     $(this.el).html(this.template);
     this.collection.each(this.appendTask);
+    console.log('we are hitting this');
     return this;
   },
 

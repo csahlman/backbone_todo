@@ -11,7 +11,8 @@ Failboat.Views.Task = Backbone.View.extend({
   },
 
   initialize: function() {
-    // this.listenTo(this.model, 'change', this.render);
+    _.bindAll(this, 'render');
+    this.listenTo(this.model, 'change', this.render);
     this.listenTo(this.model, 'destroy', this.remove);
   },
 
