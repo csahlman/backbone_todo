@@ -13,7 +13,7 @@ Failboat.Views.TaskShow = Backbone.View.extend({
   },
 
   initialize: function() {
-    _.bindAll(this, 'render', 'editName', 'renderNameForm');
+    _.bindAll(this, 'render');
     this.listenTo(this.model, 'change', this.render);
     this.listenTo(this.model, 'destroy', this.remove);
   },
@@ -35,8 +35,8 @@ Failboat.Views.TaskShow = Backbone.View.extend({
 
   editDescription: function(event) {
     event.preventDefault();
-    this.model.set({description: $('#edit_task_description').val()})
-    this.model.save({
+    this.model.set({'description': $('#edit_task_description').val()})
+    this.model.save({}, {
       wait: true,
       success: function() {
         $('#edit_description_form').remove();
@@ -54,9 +54,9 @@ Failboat.Views.TaskShow = Backbone.View.extend({
 
   editName: function(event) {
     event.preventDefault();
-    console.log(this.model);
-    this.model.set({name: $('#edit_task_name').val()});
-    this.model.save({
+    console.log(this.model.toJSON());
+    this.model.set({'name': $('#edit_task_name').val()});
+    this.model.save({}, {
       wait: true,
       success: function() {
         $('#edit_name_form').remove();
