@@ -10,6 +10,7 @@ Failboat.Views.TaskShow = Backbone.View.extend({
     'click .edit': 'renderForm',
     'submit #edit_description_form': 'editDescription',
     'submit #edit_name_form': 'editName',
+    // 'blur #edit_name_form': 'closeNameForm',
     'click .toggle': 'toggleDone'
   },
 
@@ -32,12 +33,19 @@ Failboat.Views.TaskShow = Backbone.View.extend({
 
   renderNameForm: function() {
     $('#name_header').html(JST['tasks/edit_name_form']({task: this.model}));
+    $('#name_header').focus();
   },
 
   editDescription: function(event) {
     event.preventDefault();
+    description = $('#edit_task_description').val();
+
     // this.model.set({'description': $('#edit_task_description').val()});
-    this.model.save({'description': $('#edit_task_description').val()}); 
+    this.model.save({description: description}, { 
+      error: function(model, error) {
+        console.log(error);
+      }
+    }); 
     // {
     //   wait: true
     //   // success: function() {
@@ -57,7 +65,12 @@ Failboat.Views.TaskShow = Backbone.View.extend({
 
   editName: function(event) {
     event.preventDefault();
-    this.model.save({'name': $('#edit_task_name').val()});
+    name = $('#edit_task_name').val().trim();
+    this.model.save({name: name}, {
+      error: function(model, error) {
+        console.log(error);
+      }
+    });
     // this.model.save({
     //   wait: true
     //   // success: function() {
@@ -69,6 +82,13 @@ Failboat.Views.TaskShow = Backbone.View.extend({
     //   // }
     // });
   },
+
+  // closeNameForm: function() {
+  //   value = $('#edit_task_name').val().trim();
+  //   if(value) {
+  //     this.model.save({ name: value });
+  //   }
+  // },
 
   toggleDone: function(event) {
     event.preventDefault();

@@ -22,7 +22,7 @@ Failboat.Views.TasksIndex = Backbone.View.extend({
   render: function() {
     $(this.el).html(this.template);
     this.collection.each(this.appendTask);
-    console.log('we are hitting this');
+    $('#remaining').append(this.collection.remainingTasks().length);
     return this;
   },
 

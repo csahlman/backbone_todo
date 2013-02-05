@@ -6,9 +6,16 @@ Failboat.Models.Task = Backbone.Model.extend({
     done: "false"
   },
 
-  change: function() {
-    console.log('here we go');
-    this.trigger('change');
+  validate: function(attributes) {
+    // attributes hash only contains changed attributes, so extend it to include current ones as well
+    mergedAttributes = _.extend(_.clone(this.attributes), attributes);
+    if(!mergedAttributes.name  || mergedAttributes.name.trim() === "") {
+      return "Task name must be present.";
+    }
+  },
+
+  initialize: function() {
+    
   },
 
   toggle: function() {
