@@ -22,11 +22,11 @@
         view = new Failboat.Views.TaskShow({model: show_model});
         $('#sidebar').detach();
         $('#container').append(view.render().el);
-      } else {
+      } 
+      else {
         this.collection.on('reset', function(collection, response) {
           show_model = collection.get(id);
           view = new Failboat.Views.TaskShow({model: show_model});
-          $('#sidebar').detach();
           $('#container').append(view.render().el);
         });
       }

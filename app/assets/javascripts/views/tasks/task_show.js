@@ -39,23 +39,16 @@ Failboat.Views.TaskShow = Backbone.View.extend({
   editDescription: function(event) {
     event.preventDefault();
     description = $('#edit_task_description').val();
-
-    // this.model.set({'description': $('#edit_task_description').val()});
-    this.model.save({description: description}, { 
-      error: function(model, error) {
-        console.log(error);
-      }
-    }); 
-    // {
-    //   wait: true
-    //   // success: function() {
-    //   //   $('#edit_description_form').remove();
-    //   // },
-    //   // error: function() {
-    //   //   console.log('in the error hander');
-    //   //   this.handleError();
-    //   // }
-    // });
+    if(description === this.model.get('description')) {
+      this.model.trigger('change');
+    }
+    else {
+      this.model.save({description: description}, { 
+        error: function(model, error) {
+          console.log(error);
+        }
+      }); 
+    }
   },
 
   handleError: function(entry, response) {
@@ -66,29 +59,19 @@ Failboat.Views.TaskShow = Backbone.View.extend({
   editName: function(event) {
     event.preventDefault();
     name = $('#edit_task_name').val().trim();
-    this.model.save({name: name}, {
-      error: function(model, error) {
-        console.log(error);
-      }
-    });
-    // this.model.save({
-    //   wait: true
-    //   // success: function() {
-    //   //   $('#edit_name_form').remove();
-    //   // },
-    //   // error: function() {
-    //   //   console.log('in the error hander');
-    //   //   this.handleError();
-    //   // }
-    // });
+    if(name === this.model.get('name')) {
+      this.model.trigger('change');
+    }
+    else {
+      this.model.save({name: name}, {
+        error: function(model, error) {
+          console.log(error);
+        }
+      });
+    }
   },
 
-  // closeNameForm: function() {
-  //   value = $('#edit_task_name').val().trim();
-  //   if(value) {
-  //     this.model.save({ name: value });
-  //   }
-  // },
+
 
   toggleDone: function(event) {
     event.preventDefault();
