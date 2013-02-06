@@ -14,19 +14,23 @@ Failboat.Views.Login = Backbone.View.extend({
     return this;
   },
 
-  login: function() {
+  login: function(event) {
+    event.preventDefault();
 
     email = $('#email').val();
     password = $('#password').val();
 
     this.model.save({ 
       email: email,
-      password: password
+      password: password,
+      remember_me: true
     }, {
       success: function(userSession, response) {
         // el.find('input.btn-primary').button('reset');
+        console.log(response);
+        console.log(userSession);
         Failboat.currentUser = new Failboat.Models.User(response);
-        router = new Failboat.Routers.Tasks
+        router = new Failboat.Routers.Tasks();
         router.navigate('', true);
       },
       error: function(userSession, response) {
