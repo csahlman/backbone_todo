@@ -6,7 +6,8 @@ Failboat.Views.TasksIndex = Backbone.View.extend({
   template: JST['tasks/index'],
 
   events: {
-    'submit #new_task': 'createNewTask'
+    'submit #new_task': 'createNewTask',
+    'click #log_out': 'signOut'
   },
 
   initialize: function() {
@@ -20,7 +21,7 @@ Failboat.Views.TasksIndex = Backbone.View.extend({
   },
 
   render: function() {
-    $(this.el).html(this.template({user: Failboat.currentUser}));
+    $(this.el).html(this.template({}));
     this.collection.each(this.appendTask);
     $('#remaining').append(this.collection.remainingTasks().length);
     return this;
@@ -46,6 +47,14 @@ Failboat.Views.TasksIndex = Backbone.View.extend({
         alert('error');
       }
     });
+  },
+
+  signOut: function(event) {
+    event.preventDefault();
+    $.removeCookie('user_id');
+    $.removeCookie('remember_token');
+    Failboat.currentUser = null;
+    Failboat.TasksRouter.navigate('log_in', true);
   }
 
 

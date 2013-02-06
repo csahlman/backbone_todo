@@ -50,17 +50,16 @@ Failboat.Routers.Tasks = Backbone.Router.extend({
   },
 
   index: function() {
-    if(!Failboat.currentUser) {
+    if(!Failboat.session.authenticated()) {
       this.navigate('sign_in', true);
       return false;
     }
-    console.log(Failboat.currentUser);
     view = new Failboat.Views.TasksIndex({collection: this.collection});
     $('#container').html(view.render().el);
   },
 
   show: function(id) {
-    if(!Failboat.currentUser) {
+    if(!Failboat.session.authenticated()) {
       this.navigate('sign_in', true);
       return false;
     }     
@@ -80,6 +79,10 @@ Failboat.Routers.Tasks = Backbone.Router.extend({
         $('#container').append(view.render().el);
       });
     }
+  },
+
+  renderCollection: function() {
+    this.collection.trigger('change');
   }
 
 });

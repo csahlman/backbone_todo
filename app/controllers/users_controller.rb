@@ -7,12 +7,12 @@ class UsersController < ApplicationController
       sign_in(@user)
       respond_with @user
     else
-      respond_with { message: "Not working" }
+      render nothing: true
     end
   end
 
   def show
-    
+    respond_with User.find(params[:id])
   end
 
 end

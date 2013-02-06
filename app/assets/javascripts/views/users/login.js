@@ -26,8 +26,9 @@ Failboat.Views.Login = Backbone.View.extend({
     }, {
       success: function(userSession, response) {
         // el.find('input.btn-primary').button('reset');
-        console.log(response);
-        console.log(userSession);
+        console.log(response.remember_token);
+        console.log(response.id);
+        Failboat.session.save({remember_token: response.remember_token, id: response.id })
         Failboat.currentUser = new Failboat.Models.User(response);
         router = new Failboat.Routers.Tasks();
         router.navigate('', true);
