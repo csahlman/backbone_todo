@@ -15,6 +15,7 @@
 //= require jquery_ujs
 //= require underscore
 //= require backbone
+//= require backbone-relational
 //= require failboat
 //= require_tree ../templates
 //= require_tree ./models

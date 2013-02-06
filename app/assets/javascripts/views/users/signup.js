@@ -14,44 +14,29 @@ Failboat.Views.Signup = Backbone.View.extend({
     return this;
   },
 
-  // onRender: function() {
-  //   this.modelBinder.bind(this.model, this.el);
-  // },
 
   signup: function(event) {
 
     event.preventDefault();
 
-    email = $('#email').val().trim();
-    password = $('#password').val();
-    password_confirmation = $('#password_confirmation').val();
+    var email = $('#email').val().trim();
+    var password = $('#password').val();
+    var password_confirmation = $('#password_confirmation').val();
 
 
-    // el.find('input.btn-primary').button('loading');
-    // el.find('.alert-error').remove();
-    // el.find('.help-block').remove();
-    // el.find('.control-group.error').removeClass('error');
-
-    this.model.save(
-      { email: email, 
+    this.model.save({ 
+        email: email, 
         password: password, 
         password_confirmation: password_confirmation
       }, {
       success: function(userSession, response) {
         // el.find('input.btn-primary').button('reset');
+        Failboat.session.save({remember_token: response.remember_token, id: response.id })
         Failboat.currentUser = new Failboat.Models.User(response);
         Failboat.appRouter.navigate('', true);
+        Failboat.appRouter.collection.trigger('change');
       },
       error: function(userSession, response) {
-        // var result = $.parseJSON(response.responseText);
-        // el.find('form').prepend(BD.Helpers.Notifications.error("Unable to complete signup."));
-        // _(result.errors).each(function(errors,field) {
-        //   $('#'+field+'_group').addClass('error');
-        //   _(errors).each(function(error, i) {
-        //     $('#'+field+'_group .controls').append(BD.Helpers.FormHelpers.fieldHelp(error));
-        //   });
-        // });
-        // el.find('input.btn-primary').button('reset');
         console.log('error');
         console.log(userSession);
         console.log(response);

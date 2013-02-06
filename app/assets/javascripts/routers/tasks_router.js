@@ -33,18 +33,15 @@ Failboat.Routers.Tasks = Backbone.Router.extend({
   },
 
   initialize: function() {
-    this.collection = new Failboat.Collections.Tasks();
-    this.collection.fetch();
+
   },
 
   signIn: function() {
-    console.log('in the signIn function');
     view = new Failboat.Views.Signup({});
     $('#container').html(view.render().el);
   },
 
   logIn: function() {
-    console.log('in the login function');
     view = new Failboat.Views.Login({});
     $('#container').html(view.render().el);
   },
@@ -54,6 +51,8 @@ Failboat.Routers.Tasks = Backbone.Router.extend({
       this.navigate('sign_in', true);
       return false;
     }
+    this.collection = new Failboat.Collections.Tasks();
+    this.collection.fetch();
     view = new Failboat.Views.TasksIndex({model: Failboat.currentUser, collection: this.collection});
     $('#container').html(view.render().el);
   },
@@ -62,7 +61,11 @@ Failboat.Routers.Tasks = Backbone.Router.extend({
     if(!Failboat.session.authenticated()) {
       this.navigate('sign_in', true);
       return false;
-    }     
+    }
+    if(!this.collection) {
+      this.collection = new Failboat.Collections.Tasks();
+      this.collection.fetch(); 
+    }    
     if($('#main').length === 0) {
       view = new Failboat.Views.TasksIndex({model: Failboat.currentUser, collection: this.collection});
       $('#container').html(view.render().el);
@@ -76,13 +79,10 @@ Failboat.Routers.Tasks = Backbone.Router.extend({
       this.collection.on('reset', function(collection, response) {
         show_model = collection.get(id);
         view = new Failboat.Views.TaskShow({model: show_model});
+        $('#sidebar').detach();
         $('#container').append(view.render().el);
       });
     }
-  },
-
-  renderCollection: function() {
-    this.collection.trigger('change');
   }
 
 });

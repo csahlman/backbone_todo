@@ -14,4 +14,6 @@ class Task < ActiveRecord::Base
   attr_accessible :done, :name, :description
 
   validates_presence_of :name
+
+  belongs_to :user
 end

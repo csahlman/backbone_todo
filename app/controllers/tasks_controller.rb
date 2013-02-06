@@ -1,24 +1,33 @@
 class TasksController < ApplicationController
   respond_to :json
+  before_filter :authenticate_user
 
   def show
-    respond_with Task.find(params[:id])
+    respond_with current_user.tasks.find(params[:id])
   end
 
   def index
-    respond_with Task.all
+    respond_with current_user.tasks
   end
 
   def create
-    respond_with Task.create(params[:task])
+    respond_with current_user.tasks.create(params[:task])
   end
 
   def update
-    respond_with Task.update(params[:id], params[:task])
+    @task = current_user.tasks.find(params[:id])
+    respond_with @task.update_attributes(params[:task])
   end
 
   def destroy
-    respond_with Task.destroy(params[:id])
+    @task = current_user.tasks.find(params[:id])
+    respond_with @task.destroy
   end
+
+  private
+
+    def authenticate_user
+      respond_with status: 404 unless user_signed_in?
+    end
   
 end

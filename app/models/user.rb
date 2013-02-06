@@ -17,6 +17,8 @@ class User < ActiveRecord::Base
 
   before_create :create_remember_token
 
+  has_many :tasks
+
   private
     
     def create_remember_token

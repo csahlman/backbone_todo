@@ -2,6 +2,26 @@ body {
   background-color: #eee;
 }
 
+#header {
+  width: 1000px;
+  height: 100px;
+  position: relative;
+  margin-bottom: 20px;
+  margin-top: -20px;
+  background-color: #666666;
+  color: #fff;
+
+  h1 {
+    padding: 3px;
+    margin: 20px 0 0 10px;
+  }
+
+  li {
+    display: inline;
+    padding: 4px;
+  }
+}
+
 #container {
   width: 1000px;
   position: relative;

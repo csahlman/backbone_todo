@@ -11,10 +11,6 @@ Failboat.Views.TasksIndex = Backbone.View.extend({
   },
 
   initialize: function() {
-    _.bindAll(this, 'render');
-    // this.listenTo(this.collection, 'change', this.render);
-    // this.listenTo(this.collection, 'add', this.render);
-    // this.listenTo(this.collection, 'reset', this.render);
     this.collection.on('reset', this.render, this);
     this.collection.on('add', this.render, this);
     this.collection.on('change', this.render, this);
@@ -52,6 +48,7 @@ Failboat.Views.TasksIndex = Backbone.View.extend({
 
   signOut: function(event) {
     event.preventDefault();
+    Failboat.session.destroy();
     $.removeCookie('user_id');
     $.removeCookie('remember_token');
     Failboat.currentUser = null;
