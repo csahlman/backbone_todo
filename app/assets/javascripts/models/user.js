@@ -1,0 +1,1 @@
+Failboat.Models.User = Backbone.Model.extend({});
