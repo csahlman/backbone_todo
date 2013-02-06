@@ -40,8 +40,7 @@ Failboat.Views.Signup = Backbone.View.extend({
       success: function(userSession, response) {
         // el.find('input.btn-primary').button('reset');
         Failboat.currentUser = new Failboat.Models.User(response);
-        router = new Failboat.Routers.Tasks()
-        router.navigate('', true);
+        Failboat.appRouter.navigate('', true);
       },
       error: function(userSession, response) {
         // var result = $.parseJSON(response.responseText);

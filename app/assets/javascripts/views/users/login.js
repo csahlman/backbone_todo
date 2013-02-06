@@ -30,8 +30,8 @@ Failboat.Views.Login = Backbone.View.extend({
         console.log(response.id);
         Failboat.session.save({remember_token: response.remember_token, id: response.id })
         Failboat.currentUser = new Failboat.Models.User(response);
-        router = new Failboat.Routers.Tasks();
-        router.navigate('', true);
+        Failboat.appRouter.navigate('', true);
+        Failboat.appRouter.collection.trigger('change');
       },
       error: function(userSession, response) {
         // var result = $.parseJSON(response.responseText);

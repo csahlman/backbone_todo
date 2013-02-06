@@ -1,19 +1,27 @@
-<h1>Tasks for</h1>
+<% if(user) { %>
 
-<a href="#" id="log_out">Log Out</a>
+  <h1>Tasks for <%= user.get('email') %></h1>
 
-<h4 id="remaining">Remaining Tasks: </h4>
+  <a href="#" id="log_out">Log Out</a>
 
-<form id="new_task">
-  <input type="text" name="name" id="new_task_name">
-  <input type="submit" value="Add New Task">
-</form>
+  <h4 id="remaining">Remaining Tasks: </h4>
+
+  <form id="new_task">
+    <input type="text" name="name" id="new_task_name">
+    <input type="submit" value="Add New Task">
+  </form>
 
 
-<h2>To Do</h2>
-<ul id="tasks">
-</ul>
+  <h2>To Do</h2>
+  <ul id="tasks">
+  </ul>
 
-<h2>Finished (click box to remove)</h2>
-<ul id="finished"></ul>
+  <h2>Finished (click box to remove)</h2>
+  <ul id="finished"></ul>
 
+<% } else { %>
+
+  <h1>Loading...</h1>
+  <img src='/assets/spinner.gif' />
+
+<% } %>

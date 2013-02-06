@@ -18,10 +18,11 @@ Failboat.Views.TasksIndex = Backbone.View.extend({
     this.collection.on('reset', this.render, this);
     this.collection.on('add', this.render, this);
     this.collection.on('change', this.render, this);
+    this.model.on('change', this.render, this);
   },
 
   render: function() {
-    $(this.el).html(this.template({}));
+    $(this.el).html(this.template({user: Failboat.currentUser}));
     this.collection.each(this.appendTask);
     $('#remaining').append(this.collection.remainingTasks().length);
     return this;
@@ -54,7 +55,7 @@ Failboat.Views.TasksIndex = Backbone.View.extend({
     $.removeCookie('user_id');
     $.removeCookie('remember_token');
     Failboat.currentUser = null;
-    Failboat.TasksRouter.navigate('log_in', true);
+    Failboat.appRouter.navigate('log_in', true);
   }
 
 
