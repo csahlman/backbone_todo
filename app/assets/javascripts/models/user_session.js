@@ -1,5 +1,5 @@
 Failboat.Models.UserSession = Backbone.Model.extend({
-  url: '/users/sign_in.json',
+  url: '/sign_in',
 
   toJSON: function() {
   // overwrite toJSON to correctly format params[:user] instead of params[:registration]

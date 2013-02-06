@@ -3,8 +3,15 @@ Failboat::Application.routes.draw do
 
   resources :comments
 
+  resources :users
 
   resources :tasks
+
+  controller :sessions do
+    get 'sign_in' => :new
+    post 'sign_in' => :create
+    delete 'logout' => :destroy
+  end  
 
   root to: 'pages#index'
 

@@ -35,8 +35,7 @@ Failboat.Views.Signup = Backbone.View.extend({
     this.model.save(
       { email: email, 
         password: password, 
-        password_confirmation: password_confirmation,
-        remember_me: true
+        password_confirmation: password_confirmation
       }, {
       success: function(userSession, response) {
         // el.find('input.btn-primary').button('reset');
