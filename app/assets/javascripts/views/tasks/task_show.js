@@ -11,19 +11,44 @@ Failboat.Views.TaskShow = Backbone.View.extend({
     'submit #edit_description_form': 'editDescription',
     'submit #edit_name_form': 'editName',
     // 'blur #edit_name_form': 'closeNameForm',
-    'click .toggle': 'toggleDone'
+    'click .toggle': 'toggleDone',
+    'submit #new_comment_form': 'createComment',
+    'click #load_comments': 'loadComments'
   },
 
   initialize: function() {
+    this.model.fetch();
     _.bindAll(this, 'render');
     // this.listenTo(this.model, 'change', this.render);
     this.listenTo(this.model, 'destroy', this.remove);
     this.model.on('change', this.render, this);
+    this.model.on('reset', this.render, this);
+    this.model.on('add:comments', this.render, this);
   },
 
   render: function() {
+    // console.log(this.model.get('models').length);
     $(this.el).html(this.template({task: this.model}));
+    if($('#comments').html() === undefined || $('#comments').html().match(/^\s*$/)) {
+      var comments = this.model.get('comments').models;
+      $.each(comments, function(index, comment){
+        var commentView = new Failboat.Views.Comment({model: comment});
+        $('#comments').append(commentView.render().el);        
+      });
+    }    
     return this;
+  },
+
+  loadComments: function(e) {
+    e.preventDefault();
+    this.model.trigger('change');
+  },
+
+  renderComment: function(comment) {
+    console.log('in the renderComment');
+    var commentView = new Failboat.Views.Comment({model: comment});
+    var $html = commentView.render().el;
+    $('#comments').append($html);
   },
 
   renderForm: function(event) {
@@ -38,7 +63,7 @@ Failboat.Views.TaskShow = Backbone.View.extend({
 
   editDescription: function(event) {
     event.preventDefault();
-    description = $('#edit_task_description').val();
+    var description = $('#edit_task_description').val();
     if(description === this.model.get('description')) {
       this.model.trigger('change');
     }
@@ -52,13 +77,13 @@ Failboat.Views.TaskShow = Backbone.View.extend({
   },
 
   handleError: function(entry, response) {
-    errors = $.parseJSON(response.responseText).errors
+    var errors = $.parseJSON(response.responseText).errors
     alert(errors); 
   },
 
   editName: function(event) {
     event.preventDefault();
-    name = $('#edit_task_name').val().trim();
+    var name = $('#edit_task_name').val().trim();
     if(name === this.model.get('name')) {
       this.model.trigger('change');
     }
@@ -71,11 +96,24 @@ Failboat.Views.TaskShow = Backbone.View.extend({
     }
   },
 
-
-
   toggleDone: function(event) {
     event.preventDefault();
     this.model.toggle();
+  },
+
+  createComment: function(event) {
+    event.preventDefault();
+    var content = $('#new_comment_content').val();
+    var comment = new Failboat.Models.Comment({task_id: this.model.get('id'), content: content});
+    comment.save({}, {
+      success: function() {
+        $('#new_comment_content').val('');
+      },
+      error: function() {
+        console.log('error creating comment');
+      }
+    });
   }
+
 
 });

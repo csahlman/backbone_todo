@@ -8,16 +8,16 @@ Failboat.Routers.Tasks = Backbone.Router.extend({
   },
 
   initialize: function() {
-
+    console.log('app initiated');
   },
 
   signIn: function() {
-    view = new Failboat.Views.Signup({});
+    var view = new Failboat.Views.Signup({});
     $('#container').html(view.render().el);
   },
 
   logIn: function() {
-    view = new Failboat.Views.Login({});
+    var view = new Failboat.Views.Login({});
     $('#container').html(view.render().el);
   },
 
@@ -39,13 +39,14 @@ Failboat.Routers.Tasks = Backbone.Router.extend({
     }
     if(!this.collection) {
       this.collection = new Failboat.Collections.Tasks();
-      this.collection.fetch(); 
+      this.collection.fetch({add: true}); 
     }    
     if($('#main').length === 0) {
-      view = new Failboat.Views.TasksIndex({model: Failboat.currentUser, collection: this.collection});
+      var view = new Failboat.Views.TasksIndex({model: Failboat.currentUser, collection: this.collection});
       $('#container').html(view.render().el);
     }
-    if(show_model = this.collection.get(id)) {
+    if(this.collection.get(id)) {
+      var show_model = this.collection.get(id);
       var view = new Failboat.Views.TaskShow({model: show_model});
       $('#sidebar').detach();
       $('#container').append(view.render().el);
@@ -58,6 +59,11 @@ Failboat.Routers.Tasks = Backbone.Router.extend({
         $('#container').append(view.render().el);
       });
     }
+    // var show_model = new Failboat.Models.Task({id: id});
+    // show_model.fetch();
+    // var view = new Failboat.Views.TaskShow({model: show_model});
+    // $('#container').append(view.render().el);
+  //   this.collection.add(show_model);
   }
 
 });

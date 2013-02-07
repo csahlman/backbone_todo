@@ -1,14 +1,14 @@
 class TasksController < ApplicationController
   respond_to :json
-  # before_filter :authenticate_user
+  before_filter :authenticate_user
 
   def show
-    @task = current_user.tasks.find(params[:id])
+    @task = current_user.tasks.includes(comments: :user).find(params[:id])
     respond_with @task
   end
 
   def index
-    @tasks = current_user.tasks
+    @tasks = current_user.tasks.includes(comments: :user)
     # @tasks = Task.all
     respond_with @tasks
     # respond_with current_user.tasks

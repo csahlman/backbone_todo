@@ -1,8 +1,12 @@
 collection @tasks
+
 attributes :id, :name, :done
 
-node(:ghetto_face) { "this is the ghetto face" }
+child :users do 
+  attributes :id, :email
+end
 
-# child :users do 
-#   attributes :id, :email
-# end
+child :comments do 
+  attributes :id, :content, :created_at
+  node(:poster_name) { |comment| comment.user.email }
+end
