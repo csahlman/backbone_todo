@@ -29,6 +29,8 @@ end
 
 gem 'backbone-on-rails'
 
+gem 'rabl'
+
 # gem 'devise'
 
 gem 'jquery-rails'

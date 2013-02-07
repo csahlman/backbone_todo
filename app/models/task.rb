@@ -15,5 +15,8 @@ class Task < ActiveRecord::Base
 
   validates_presence_of :name
 
-  belongs_to :user
+  has_many :users, through: :task_users
+  has_many :task_users, dependent: :destroy
+
+  has_many :comments, dependent: :destroy
 end

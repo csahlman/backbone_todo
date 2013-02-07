@@ -14,7 +14,9 @@ Failboat.Views.TasksIndex = Backbone.View.extend({
     this.collection.on('reset', this.render, this);
     this.collection.on('add', this.render, this);
     this.collection.on('change', this.render, this);
+    this.collection.on('remove', this.render, this);
     this.model.on('change', this.render, this);
+    this.model.on('destroy', this.render, this);
   },
 
   render: function() {
@@ -25,7 +27,7 @@ Failboat.Views.TasksIndex = Backbone.View.extend({
   },
 
   appendTask: function(task) {
-    view = new Failboat.Views.Task({model: task});
+    var view = new Failboat.Views.Task({model: task});
     if (task.isFinished()) {
       $('#finished').append(view.render().el);
     } else {
@@ -49,10 +51,6 @@ Failboat.Views.TasksIndex = Backbone.View.extend({
   signOut: function(event) {
     event.preventDefault();
     Failboat.session.destroy();
-    $.removeCookie('user_id');
-    $.removeCookie('remember_token');
-    Failboat.currentUser = null;
-    Failboat.appRouter.navigate('log_in', true);
   }
 
 

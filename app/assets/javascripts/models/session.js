@@ -7,6 +7,7 @@ Failboat.Models.Session = Backbone.Model.extend({
 
   initialize: function() {
     this.load();
+    this.on('destroy', this.signOut, this);
   },
 
   authenticated: function() {
@@ -24,6 +25,13 @@ Failboat.Models.Session = Backbone.Model.extend({
       'user_id': $.cookie('user_id'),
       'remember_token': $.cookie('remember_token')
     });
+  },
+
+  signOut: function() {
+    $.removeCookie('user_id');
+    $.removeCookie('remember_token');
+    Failboat.currentUser = null;
+    Failboat.appRouter.navigate('log_in', true);
   }
 
 });

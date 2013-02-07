@@ -17,7 +17,10 @@ class User < ActiveRecord::Base
 
   before_create :create_remember_token
 
-  has_many :tasks
+  has_many :tasks, through: :task_users
+  has_many :task_users, dependent: :destroy
+
+  has_many :comments
 
   private
     

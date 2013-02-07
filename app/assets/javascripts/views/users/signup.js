@@ -2,7 +2,7 @@ Failboat.Views.Signup = Backbone.View.extend({
   template: JST['users/signup'],
 
   events: {
-    'submit form': 'signup'
+    'submit form': 'signUp'
   },
 
   initialize: function() {
@@ -15,7 +15,7 @@ Failboat.Views.Signup = Backbone.View.extend({
   },
 
 
-  signup: function(event) {
+  signUp: function(event) {
 
     event.preventDefault();
 
