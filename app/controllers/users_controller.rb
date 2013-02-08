@@ -12,7 +12,7 @@ class UsersController < ApplicationController
   end
 
   def show
-    respond_with User.find(params[:id])
+    respond_with User.find_by_remember_token(params[:id])
   end
 
 end

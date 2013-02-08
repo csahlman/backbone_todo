@@ -2,6 +2,7 @@ Failboat.Routers.Tasks = Backbone.Router.extend({
 
   routes: {
     "": "index",
+    "boards/:id": "showBoard",
     "tasks/:id": "show",
     "sign_in": "signIn",
     'log_in': 'logIn'
@@ -22,6 +23,16 @@ Failboat.Routers.Tasks = Backbone.Router.extend({
   },
 
   index: function() {
+    this.collection = new Failboat.Collections.Boards();
+    this.collection.fetch();
+    var boardView = new Failboat.Views.BoardsIndex({
+      model: Failboat.currentUser, 
+      collection: this.collection
+    });
+    $('#container').html(boardView.render().el);
+  },
+
+  showBoard: function(id) {
     if(!Failboat.session.authenticated()) {
       this.navigate('sign_in', true);
       return false;
@@ -39,7 +50,7 @@ Failboat.Routers.Tasks = Backbone.Router.extend({
     }
     if(!this.collection) {
       this.collection = new Failboat.Collections.Tasks();
-      this.collection.fetch({add: true}); 
+      this.collection.fetch(); 
     }    
     if($('#main').length === 0) {
       var view = new Failboat.Views.TasksIndex({model: Failboat.currentUser, collection: this.collection});

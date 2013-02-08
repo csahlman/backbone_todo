@@ -1,0 +1,26 @@
+<% if(user) { %>
+
+  <a href="#" id="log_out">Log Out</a>
+
+  <h2>Boards for <%= user.get('email') %></h2>
+
+  <h2>Current Boards</h2>
+  <ul id="boards">
+  </ul>
+
+  <h3>Create a new board</h3>
+
+  <form id="new_board">
+    <input type="text" name="name" id="new_board_name">
+    <input type="submit" value="Add New Board">
+  </form>
+
+
+
+<% } else { %>
+  <h1>Please Login or Sign Up</h1>
+
+  <a href="#log_in" id="log_in">Log In</a> or 
+  <a href="#sign_in" id="sign_in">Sign Up</a>
+
+<% } %>

@@ -20,6 +20,9 @@ class User < ActiveRecord::Base
   has_many :tasks, through: :task_users
   has_many :task_users, dependent: :destroy
 
+  has_many :board_users, dependent: :destroy
+  has_many :boards, through: :board_users
+
   has_many :comments
 
   private

@@ -17,13 +17,14 @@ Failboat.Views.TaskShow = Backbone.View.extend({
   },
 
   initialize: function() {
+    console.log('in the initialize tasks show');
     this.model.fetch();
     _.bindAll(this, 'render');
     // this.listenTo(this.model, 'change', this.render);
     this.listenTo(this.model, 'destroy', this.remove);
     this.model.on('change', this.render, this);
     this.model.on('reset', this.render, this);
-    this.model.on('add:comments', this.render, this);
+    this.model.on('add:comments', this.renderComment, this);
   },
 
   render: function() {
@@ -45,7 +46,6 @@ Failboat.Views.TaskShow = Backbone.View.extend({
   },
 
   renderComment: function(comment) {
-    console.log(comment);
     var commentView = new Failboat.Views.Comment({model: comment});
     var $html = commentView.render().el;
     $('#comments').append($html);

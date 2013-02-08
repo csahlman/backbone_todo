@@ -7,7 +7,7 @@ window.Failboat = {
     this.appRouter = new Failboat.Routers.Tasks();
     this.session = new Failboat.Models.Session();
     if(this.session.authenticated()) {
-      var user = new Failboat.Models.User({'id': this.session.get('user_id')});
+      var user = new Failboat.Models.User({'remember_token': this.session.get('remember_token')});
       user.fetch();
       this.currentUser = user;
     } else {

@@ -8,6 +8,7 @@
 #  created_at  :datetime         not null
 #  updated_at  :datetime         not null
 #  description :text
+#  board_id    :integer
 #
 
 class Task < ActiveRecord::Base
@@ -19,4 +20,6 @@ class Task < ActiveRecord::Base
   has_many :task_users, dependent: :destroy
 
   has_many :comments, dependent: :destroy
+
+  belongs_to :board
 end

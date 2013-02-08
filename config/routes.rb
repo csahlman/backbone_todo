@@ -7,6 +7,8 @@ Failboat::Application.routes.draw do
 
   resources :tasks
 
+  resources :boards
+
   controller :sessions do
     get 'sign_in' => :new
     post 'sign_in' => :create
