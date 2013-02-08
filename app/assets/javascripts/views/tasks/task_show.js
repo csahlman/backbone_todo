@@ -12,9 +12,7 @@ Failboat.Views.TaskShow = Backbone.View.extend({
     'submit #edit_name_form': 'editName',
     // 'blur #edit_name_form': 'closeNameForm',
     'click .toggle': 'toggleDone',
-    'submit #new_comment_form': 'createComment',
-    'click #load_comments': 'loadComments'
-  },
+    'submit #new_comment_form': 'createComment'  },
 
   initialize: function() {
     console.log('in the initialize tasks show');
@@ -40,10 +38,6 @@ Failboat.Views.TaskShow = Backbone.View.extend({
     return this;
   },
 
-  loadComments: function(e) {
-    e.preventDefault();
-    this.model.trigger('change');
-  },
 
   renderComment: function(comment) {
     var commentView = new Failboat.Views.Comment({model: comment});
