@@ -8,7 +8,7 @@ class TasksController < ApplicationController
   end
 
   def index
-    @tasks = current_user.tasks.includes(comments: :user)
+    @tasks = current_user.tasks.includes(:users)
     # @tasks = Task.all
     respond_with @tasks
     # respond_with current_user.tasks

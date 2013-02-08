@@ -45,7 +45,7 @@ Failboat.Views.TaskShow = Backbone.View.extend({
   },
 
   renderComment: function(comment) {
-    console.log('in the renderComment');
+    console.log(comment);
     var commentView = new Failboat.Views.Comment({model: comment});
     var $html = commentView.render().el;
     $('#comments').append($html);
