@@ -12,7 +12,8 @@ class UsersController < ApplicationController
   end
 
   def show
-    respond_with User.find_by_remember_token(params[:id])
+    @user = User.includes(:boards).find_by_remember_token(params[:id])
+    respond_with @user
   end
 
 end

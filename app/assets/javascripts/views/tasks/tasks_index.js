@@ -11,12 +11,13 @@ Failboat.Views.TasksIndex = Backbone.View.extend({
   },
 
   initialize: function() {
+    // this.collection.trigger('change');
     this.collection.on('reset', this.render, this);
     this.collection.on('add', this.render, this);
     this.collection.on('change', this.render, this);
     this.collection.on('remove', this.render, this);
-    this.model.on('change', this.render, this);
-    this.model.on('destroy', this.render, this);
+    // this.model.on('change', this.render, this);
+    // this.model.on('destroy', this.render, this);
   },
 
   render: function() {
