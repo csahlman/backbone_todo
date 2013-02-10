@@ -30,6 +30,7 @@ Failboat.Models.Session = Backbone.Model.extend({
   signOut: function() {
     $.removeCookie('user_id');
     $.removeCookie('remember_token');
+    $('#sign_out_nav').remove();
     Failboat.currentUser = null;
     Failboat.appRouter.navigate('log_in', true);
   }

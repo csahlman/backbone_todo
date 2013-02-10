@@ -1,2 +1,2 @@
-<a href="#tasks/<%= task.escape('id') %>"><%= task.escape('name') %></a> 
+<a href="#boards/<%= task.get('board_id') %>/tasks/<%= task.get('id') %>"><%= task.escape('name') %></a> 
 <input type="checkbox" name="remove">

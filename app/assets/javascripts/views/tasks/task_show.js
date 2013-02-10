@@ -16,7 +16,6 @@ Failboat.Views.TaskShow = Backbone.View.extend({
 
   initialize: function() {
     console.log('in the initialize tasks show');
-    this.model.fetch();
     _.bindAll(this, 'render');
     // this.listenTo(this.model, 'change', this.render);
     this.listenTo(this.model, 'destroy', this.remove);
@@ -96,6 +95,7 @@ Failboat.Views.TaskShow = Backbone.View.extend({
   },
 
   createComment: function(event) {
+    console.log('creating comment');
     event.preventDefault();
     var content = $('#new_comment_content').val();
     var comment = new Failboat.Models.Comment({task_id: this.model.get('id'), content: content});

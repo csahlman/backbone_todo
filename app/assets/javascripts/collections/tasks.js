@@ -1,6 +1,14 @@
 Failboat.Collections.Tasks = Backbone.Collection.extend({
   model: Failboat.Models.Task,
-  url: '/tasks',
+  url: '/boards/',
+
+  initialize: function() {
+    this.on('add', this.logOut, this);
+  },
+
+  logOut: function() {
+    console.log('change event');
+  },
 
   completed: function() {
     return this.filter(function(task){

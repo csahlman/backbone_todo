@@ -11,11 +11,12 @@ Failboat.Views.BoardsIndex = Backbone.View.extend({
     this.collection.on('reset', this.render, this);
     this.collection.on('add', this.addOne, this);
     this.collection.on('change', this.render, this);
-    this.model.on('reset', this.render, this);
-    this.model.on('change', this.render, this);
+    // this.model.on('reset', this.render, this);
+    // this.model.on('change', this.render, this);
   },
 
   render: function() {
+    console.log(this.model);
     this.$el.html(this.template({user: Failboat.currentUser, boards: this.collection.models}));
     this.collection.each(this.addOne);
     return this;

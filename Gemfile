@@ -29,6 +29,8 @@ end
 
 gem 'backbone-on-rails'
 
+gem 'twitter-bootstrap-rails'
+
 gem 'rabl'
 
 # gem 'devise'

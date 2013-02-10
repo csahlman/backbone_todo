@@ -6,8 +6,7 @@ Failboat.Views.TasksIndex = Backbone.View.extend({
   template: JST['tasks/index'],
 
   events: {
-    'submit #new_task': 'createNewTask',
-    'click #log_out': 'signOut'
+    'submit #new_task': 'createNewTask'
   },
 
   initialize: function() {
@@ -47,11 +46,6 @@ Failboat.Views.TasksIndex = Backbone.View.extend({
         alert('error');
       }
     });
-  },
-
-  signOut: function(event) {
-    event.preventDefault();
-    Failboat.session.destroy();
   }
 
 

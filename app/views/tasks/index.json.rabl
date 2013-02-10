@@ -1,6 +1,6 @@
 collection @tasks
 
-attributes :id, :name, :done
+attributes :id, :name, :done, :board_id
 
 child :users do 
   attributes :id, :email

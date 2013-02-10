@@ -1,5 +1,5 @@
 object @task
-attributes :id, :name, :done
+attributes :id, :name, :done, :board_id
 
 child :comments do 
   attributes :id, :content, :created_at

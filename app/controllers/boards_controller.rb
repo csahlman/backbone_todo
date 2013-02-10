@@ -15,7 +15,8 @@ class BoardsController < ApplicationController
   end
 
   def show
-    
+    @board = current_user.boards.find(params[:id])
+    respond_with @board
   end
 
   def destroy
