@@ -33,6 +33,7 @@ Failboat.Models.Session = Backbone.Model.extend({
     $('#sign_out_nav').remove();
     Failboat.currentUser = null;
     Failboat.appRouter.navigate('log_in', true);
+    $('#sidebar_ul').html('<li><a href="#"><span>Dashboard</span> <i class="icon icon-home"></i></a></li>');
   }
 
 });

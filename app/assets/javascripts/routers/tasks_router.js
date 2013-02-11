@@ -15,16 +15,16 @@ Failboat.Routers.Tasks = Backbone.Router.extend({
 
   signIn: function() {
     var view = new Failboat.Views.Signup({});
-    var infoView = new Failboat.Views.Info();
+    // var infoView = new Failboat.Views.Info();
     $('#container').html(view.render().el);
-    $('#sidebar').html(infoView.render().el);
+    // $('#sidebar').html(infoView.render().el);
   },
 
   logIn: function() {
     var loginView = new Failboat.Views.Login({});
-    var infoView = new Failboat.Views.Info();
+    // var infoView = new Failboat.Views.Info();
     $('#container').html(loginView.render().el);
-    $('#sidebar').html(infoView.render().el);
+    // $('#sidebar').html(infoView.render().el);
   },
 
   signOut: function() {
@@ -43,8 +43,8 @@ Failboat.Routers.Tasks = Backbone.Router.extend({
       collection: this.boardsCollection
     });
     $('#container').html(boardView.render().el);
-    var sidebarView = new Failboat.Views.Sidebar({model: Failboat.currentUser});
-    $('#sidebar').html(sidebarView.render().el);
+    // var sidebarView = new Failboat.Views.Sidebar({model: Failboat.currentUser});
+    // $('#sidebar').html(sidebarView.render().el);
   },
 
   showBoard: function(id) {
@@ -66,8 +66,8 @@ Failboat.Routers.Tasks = Backbone.Router.extend({
         if(self.requestedId) self.showTask(id, self.requestedId);
       }
     });
-    var sidebarView = new Failboat.Views.Sidebar({model: Failboat.currentUser});
-    $('#sidebar').html(sidebarView.render().el);
+    // var sidebarView = new Failboat.Views.Sidebar({model: Failboat.currentUser});
+    // $('#sidebar').html(sidebarView.render().el);
   },
 
   showTask: function(boardId, id) {
@@ -96,8 +96,8 @@ Failboat.Routers.Tasks = Backbone.Router.extend({
       this.requestedId = id;
       this.showBoard(boardId);
     }
-    var sidebarView = new Failboat.Views.Sidebar({model: Failboat.currentUser});
-    $('#sidebar').html(sidebarView.render().el);  
+    // var sidebarView = new Failboat.Views.Sidebar({model: Failboat.currentUser});
+    // $('#sidebar').html(sidebarView.render().el);  
   }
 
 });

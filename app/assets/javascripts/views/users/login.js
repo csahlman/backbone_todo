@@ -36,7 +36,7 @@ Failboat.Views.Login = Backbone.View.extend({
         console.log(response);
       }
     });
-    $('#main_nav').append('<li id="sign_out_nav"><a href="#sign_out" id="sign_out">Sign Out</a></li>');
+    $('#sidebar_ul').append(JST['utilities/logged_in_sidebar']());
   }
 
 });
