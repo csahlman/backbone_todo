@@ -8,7 +8,8 @@ Failboat.Views.BoardShow = Backbone.View.extend({
   template: JST['boards/show_board'],
 
   events: {
-    'submit #new_task': 'createTask'
+    'submit #new_task': 'createTask',
+    'click #delete_board': 'deleteBoard'
   },
 
   initialize: function() {
@@ -17,6 +18,7 @@ Failboat.Views.BoardShow = Backbone.View.extend({
     this.model.on('add:tasks', this.addOne, this);
     this.model.on('change:tasks:done', this.addAll, this);
     this.model.on('change:tasks:name', this.render, this);    
+    this.model.on('destroy', this.remove, this);
   },
 
   render: function() {
@@ -42,6 +44,12 @@ Failboat.Views.BoardShow = Backbone.View.extend({
 
   recreateTaskListItem: function(task) {
     console.log('recreate');
+  },
+
+  deleteBoard: function(event) {
+    event.preventDefault();
+    var confirmation = confirm('Are you sure you want to delete this board?');
+    if(confirmation) this.model.destroy();
   },
 
   createTask: function(event) {

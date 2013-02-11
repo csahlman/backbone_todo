@@ -17,7 +17,7 @@ class BoardsController < ApplicationController
   end
 
   def destroy
-    
+    respond_with current_user.boards.find(params[:id]).destroy
   end
 
 
