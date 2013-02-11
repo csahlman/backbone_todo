@@ -15,12 +15,18 @@ class TasksController < ApplicationController
   end
 
   def create
-    respond_with current_user.tasks.create(params[:task])
+    @task = current_user.tasks.build
+    @task.set_task_attributes(params)
+    @task.save!
+    @task.users = [current_user]
+    respond_with @task
   end
 
   def update
     @task = current_user.tasks.find(params[:id])
-    respond_with @task.update_attributes(params[:task])
+    @task.set_task_attributes(params)
+    @task.save!
+    respond_with @task
   end
 
   def destroy

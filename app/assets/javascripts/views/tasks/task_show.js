@@ -15,34 +15,35 @@ Failboat.Views.TaskShow = Backbone.View.extend({
     'submit #new_comment_form': 'createComment'  },
 
   initialize: function() {
-    console.log('in the initialize tasks show');
-    _.bindAll(this, 'render');
-    // this.listenTo(this.model, 'change', this.render);
-    this.listenTo(this.model, 'destroy', this.remove);
+    this.model.on('destroy', this.remove, this);
     this.model.on('change', this.render, this);
     this.model.on('reset', this.render, this);
-    this.model.on('add:comments', this.render, this);
+    this.model.on('add:comments', this.renderComment, this);
+    this.model.on('remove:comments', this.remove, this);
+    console.log(this.model);
   },
 
   render: function() {
+    console.log('in the task show render');
     // console.log(this.model.get('models').length);
     $(this.el).html(this.template({task: this.model}));
-    if($('#comments').html() === undefined || $('#comments').html().match(/^\s*$/)) {
-      var comments = this.model.get('comments').models;
-      $.each(comments, function(index, comment){
-        var commentView = new Failboat.Views.Comment({model: comment});
-        $('#comments').append(commentView.render().el);        
-      });
-    }    
+    // if($('#comments').html() === undefined || $('#comments').html().match(/^\s*$/)) {
+    //   var comments = this.model.get('comments').models;
+    //   $.each(comments, function(index, comment){
+    //     var commentView = new Failboat.Views.Comment({model: comment});
+    //     $('#comments').append(commentView.render().el);        
+    //   });
+    // }    
     return this;
   },
 
 
-  // renderComment: function(comment) {
-  //   var commentView = new Failboat.Views.Comment({model: comment});
-  //   var $html = commentView.render().el;
-  //   $('#comments').append($html);
-  // },
+  renderComment: function(comment) {
+    console.log('rendering a comment');
+    var commentView = new Failboat.Views.Comment({model: comment});
+    var $html = commentView.render().el;
+    $('#comments').append($html);
+  },
 
   renderForm: function(event) {
     event.preventDefault();

@@ -3,11 +3,8 @@ class BoardsController < ApplicationController
   before_filter :authenticate_user, only: [ :create, :destroy, :show ]
 
   def index
-    if user_signed_in?
-      respond_with current_user.boards
-    else
-      respond_with Board.all
-    end
+    @boards = current_user.boards.includes(:tasks)
+    respond_with @boards
   end
 
   def create

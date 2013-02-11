@@ -11,15 +11,17 @@ Failboat.Views.Task = Backbone.View.extend({
   },
 
   initialize: function() {
-    _.bindAll(this, 'render');
-    // this.listenTo(this.model, 'change', this.render);
     this.listenTo(this.model, 'destroy', this.remove);
     this.model.on('change', this.render, this);
   },
 
   render: function() {
-    $(this.el).html(this.template({task: this.model}));
-    this.addToCorrectList();
+    this.$el.html(this.template({
+      board_id: this.model.get('board'),
+      id: this.model.get('id'),
+      name: this.model.escape('name')
+    }));
+    // this.addToCorrectList();
     return this;
   },
 
@@ -29,17 +31,17 @@ Failboat.Views.Task = Backbone.View.extend({
   },
 
 
-  addToCorrectList: function() {
-    $li = this.$el;
-    if(this.model.isFinished()) {
-      $li.addClass('finished');
-      $li.appendTo('#finished');
-    } else {
-      $li.removeClass('finished');
-      $li.appendTo('#tasks');
-    }
-    return this;
-  },
+  // addToCorrectList: function() {
+  //   $li = this.$el;
+  //   if(this.model.isFinished()) {
+  //     $li.appendTo('#finished');
+  //     $li.addClass('finished');
+  //   } else {
+  //     $li.appendTo('tasks');
+  //     $li.removeClass('finished');
+  //   }
+  //   // return this;
+  // },
 
   removeItem: function(event) {
     event.preventDefault();

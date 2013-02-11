@@ -3,11 +3,7 @@ Failboat.Collections.Tasks = Backbone.Collection.extend({
   url: '/boards/',
 
   initialize: function() {
-    this.on('add', this.logOut, this);
-  },
-
-  logOut: function() {
-    console.log('change event');
+    // this.on('add', this.logOut, this);
   },
 
   completed: function() {

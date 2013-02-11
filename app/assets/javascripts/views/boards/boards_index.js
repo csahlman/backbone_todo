@@ -16,7 +16,7 @@ Failboat.Views.BoardsIndex = Backbone.View.extend({
   },
 
   render: function() {
-    console.log(this.model);
+    console.log('rendering boards index');
     this.$el.html(this.template({user: Failboat.currentUser, boards: this.collection.models}));
     this.collection.each(this.addOne);
     return this;

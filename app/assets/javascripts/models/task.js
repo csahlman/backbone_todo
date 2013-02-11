@@ -11,7 +11,7 @@ Failboat.Models.Task = Backbone.RelationalModel.extend({
     key: 'comments',
     relatedModel: 'Failboat.Models.Comment',
     collectionType: 'Failboat.Collections.Comments',
-    // includeInJSON: false,
+    includeInJSON: false,
     reverseRelation: {
       key: "task_id",
       includeInJSON: 'id'
@@ -35,6 +35,7 @@ Failboat.Models.Task = Backbone.RelationalModel.extend({
     this.save({
       done: !this.get('done')
     });
+    this.trigger('change');
   },
 
   isFinished: function() {

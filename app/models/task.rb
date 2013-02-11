@@ -22,4 +22,10 @@ class Task < ActiveRecord::Base
   has_many :comments, dependent: :destroy
 
   belongs_to :board
+
+  def set_task_attributes(params)
+    self.done = params[:done]
+    self.name = params[:name]
+    self.board_id = params[:board_id]
+  end
 end

@@ -1,4 +1,4 @@
-<h1><%= board.escape('name') %></h1>
+<h1><%= name %></h1>
 
 <h3>Remaining Tasks: </h3>
 
@@ -7,3 +7,8 @@
 <h3>Finished Tasks: </h3>
 
 <ul id="finished"></ul>
+
+<form id="new_task">
+  <input type="text" name="name" id="new_task_name">
+  <input type="submit" value="Add New Task">
+</form>
