@@ -1,7 +1,7 @@
 Failboat.Views.TaskShow = Backbone.View.extend({
   id: 'right-span',
 
-  className: 'span6',
+  className: 'span6 well',
 
   template: JST['tasks/show'],
 
@@ -24,16 +24,14 @@ Failboat.Views.TaskShow = Backbone.View.extend({
     this.model.on('change:name', this.render, this);
     this.model.on('change:done', this.render, this);
     this.model.on('reset', this.render, this);
-    this.model.on('add:comments', this.renderComment, this);
+    this.model.on('add:comments', this.render, this);
   },
 
   render: function() {
     console.log('in the task show render');
     $(this.el).html(this.template({task: this.model}));
-    // if($('#comments').html() === undefined || $('#comments').html().match(/^\s*$/)) {
     var comments = this.model.get('comments');
     comments.each(this.renderComment);
-    // }    
     return this;
   },
 
@@ -76,7 +74,7 @@ Failboat.Views.TaskShow = Backbone.View.extend({
     event.preventDefault();
     var name = $('#edit_task_name').val().trim();
     if(name === this.model.get('name')) {
-      this.model.trigger('change');
+      this.model.trigger('change:name');
     }
     else {
       this.model.save({name: name}, {

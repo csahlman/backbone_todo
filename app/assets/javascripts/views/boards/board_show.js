@@ -15,6 +15,8 @@ Failboat.Views.BoardShow = Backbone.View.extend({
     this.model.fetch();
     this.model.on('reset', this.addAll, this);
     this.model.on('add:tasks', this.addOne, this);
+    this.model.on('change:tasks:done', this.addAll, this);
+    this.model.on('change:tasks:name', this.render, this);    
   },
 
   render: function() {
