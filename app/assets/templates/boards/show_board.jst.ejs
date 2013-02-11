@@ -1,14 +1,24 @@
-<h1><%= name %> <a href="#" class="btn btn-large btn-danger" id="delete_board">Delete Board</a></h1>
+<div class="widget-box">
+  <div class="widget-title">
+    <h5>Current Tasks</h5>
+    <span title="current" class="label label-info tip-left">
+      Here we go bro
+    </span>
+  </div>
+  <div class="widget-content">
+    <h3>Current Tasks</h3>
+    <ul class="site-stats" id="tasks">
+      
+    </ul>
+    <h3>Finished Tasks</h3>
+    <ul class="site-stats" id="finished"></ul>
 
-<h3>Remaining Tasks: </h3>
+    <form id="new_task">
+      <input type="text" name="name" id="new_task_name">
+      <input type="submit" value="Add New Task">
+    </form>
 
-<ul id="tasks"></ul>
+  </div>     
+</div>
 
-<h3>Finished Tasks: </h3>
 
-<ul id="finished"></ul>
-
-<form id="new_task">
-  <input type="text" name="name" id="new_task_name">
-  <input type="submit" value="Add New Task">
-</form>

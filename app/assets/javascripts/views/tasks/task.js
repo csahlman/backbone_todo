@@ -7,7 +7,7 @@ Failboat.Views.Task = Backbone.View.extend({
 
   events: {
     'click .toggle': 'toggleDone',
-    'change :checkbox': 'removeItem'
+    'click .delete_button': 'removeItem'
   },
 
   initialize: function() {
@@ -16,16 +16,20 @@ Failboat.Views.Task = Backbone.View.extend({
     this.model.on('change:done', this.addToCorrectList, this);
     this.model.on('change:name', this.render, this);
     this.model.on('change:id', this.render, this);
+    this.model.on('change:description', this.render, this);
   },
 
   render: function() {
     var board_id = this.model.get('board_id').get('id'),
         id = this.model.id,
-        name = this.model.escape('name');
+        name = this.model.escape('name'),
+        description = this.model.escape('description');
+
     this.$el.html(this.template({
       board_id: board_id,
       id: id,
-      name: name
+      name: name,
+      description: description
     }));
     this.addToCorrectList();
     return this;

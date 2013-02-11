@@ -1,4 +1,24 @@
+.link_list {
+  font-size: 150%; 
+  font-weight: bold;
+}
 
+.bullet_description {
+  padding: 5px;
+  font-style: italic;
+}
+
+.delete_button {
+  float: right;
+}
+
+.widget-box {
+  margin-top: -10px;
+}
+
+#edit_board_name_form {
+  display: inline; 
+}
 // #header {
 //   width: 1000px;
 //   height: 100px;
