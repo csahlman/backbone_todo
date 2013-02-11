@@ -1,4 +1,9 @@
 Failboat.Views.BoardShow = Backbone.View.extend({
+  tagName: 'div',
+
+  id: 'left',
+
+  className: "span6", 
 
   template: JST['boards/show_board'],
 
@@ -8,32 +13,29 @@ Failboat.Views.BoardShow = Backbone.View.extend({
 
   initialize: function() {
     this.model.fetch();
-    this.model.on('reset', this.render, this);
-    // this.model.on('change', this.render, this);
-    this.model.on('add:tasks', this.addTaskListItem, this);
+    this.model.on('reset', this.addAll, this);
+    this.model.on('add:tasks', this.addOne, this);
   },
 
   render: function() {
-    // console.log(this.tasks);
     this.$el.html(this.template({
       name: this.model.escape('name')
     }));
     return this;
   },
 
-  addOne: function(board) {
-    var boardView = new Failboat.Views.Board({model: board});
-    $('#boards').append(boardView.render().el);
+  addAll: function() {
+    console.log('hitting addAll');
+    this.model.get('tasks').each(this.addOne);
   },
 
-  addTaskListItem: function(task) {
-    var taskListItem = new Failboat.Views.Task({model: task});
+  addOne: function(task) {
+    var taskListItemView = new Failboat.Views.Task({model: task});
     if(task.isFinished()) {
-      $('#finished').append(taskListItem.render().el);
+      this.$('#finished').append(taskListItemView.render().el);
     } else {
-      $('#tasks').append(taskListItem.render().el);
+      this.$('#tasks').append(taskListItemView.render().el);
     }
-    return this;
   },
 
   recreateTaskListItem: function(task) {

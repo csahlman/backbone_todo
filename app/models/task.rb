@@ -27,5 +27,6 @@ class Task < ActiveRecord::Base
     self.done = params[:done]
     self.name = params[:name]
     self.board_id = params[:board_id]
+    self.description = params[:description] if params[:description]
   end
 end

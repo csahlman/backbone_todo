@@ -57,12 +57,12 @@ Failboat.Routers.Tasks = Backbone.Router.extend({
     this.boardsCollection.fetch({
       success: function() {
         self.board = self.boardsCollection.get(id);
-        if(self.boardView) self.boardView.remove();
-        self.boardView = new Failboat.Views.BoardShow({
+        if(self.boardShowView) self.boardShowView.remove();
+        self.boardShowView = new Failboat.Views.BoardShow({
           model: self.board, 
           board: id
         });
-        $('#container').html(self.boardView.render().el);
+        $('#container').html(self.boardShowView.render().el);
         if(self.requestedId) self.showTask(id, self.requestedId);
       }
     });
@@ -71,10 +71,12 @@ Failboat.Routers.Tasks = Backbone.Router.extend({
   },
 
   showTask: function(boardId, id) {
+    this.requestedId = null;
     if(!Failboat.session.authenticated()) {
       this.navigate('sign_in', true);
       return false;
     }
+    $('#right-span').remove();
     var self = this;
     if(this.board) {
       var tasks = this.board.get('tasks')
@@ -84,10 +86,9 @@ Failboat.Routers.Tasks = Backbone.Router.extend({
         }
       });
       if(this.task) {
-        if(this.taskView) this.taskView.remove();
         this.task.fetch();
-        this.taskView = new Failboat.Views.TaskShow({model: this.task});
-        $('#container').append(this.taskView.render().el);
+        var taskView = new Failboat.Views.TaskShow({model: this.task});
+        $('#container').append(taskView.render().el);
       }
     } else if (this.board && !this.task) {
         console.log('found the board, not the task');
