@@ -49,7 +49,7 @@ Failboat.Views.BoardShow = Backbone.View.extend({
     var board_id = this.model.get('id');
     var newTask = new Failboat.Models.Task({
       name: $('#new_task_name').val(), 
-      done: false, 
+      done: false,
       board_id: board_id
     });
     newTask.save({}, {

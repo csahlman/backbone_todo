@@ -8,7 +8,9 @@ Failboat.Views.Sidebar = Backbone.View.extend({
   },
 
   render: function() {
-    this.$el.html(this.template({user: this.model}));
+    this.$el.html(this.template({
+      email: this.model.get('email'),
+    }));
     return this;
   }
 

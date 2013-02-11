@@ -12,15 +12,20 @@ Failboat.Views.Task = Backbone.View.extend({
 
   initialize: function() {
     this.listenTo(this.model, 'destroy', this.remove);
+    this.model.on('reset', this.render, this);
     this.model.on('change:done', this.addToCorrectList, this);
     this.model.on('change:name', this.render, this);
+    this.model.on('change:id', this.render, this);
   },
 
   render: function() {
+    var board_id = this.model.get('board_id').get('id'),
+        id = this.model.id,
+        name = this.model.escape('name');
     this.$el.html(this.template({
-      board_id: this.model.get('board'),
-      id: this.model.get('id'),
-      name: this.model.escape('name')
+      board_id: board_id,
+      id: id,
+      name: name
     }));
     this.addToCorrectList();
     return this;
