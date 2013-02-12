@@ -20,6 +20,13 @@ class BoardsController < ApplicationController
     respond_with current_user.boards.find(params[:id]).destroy
   end
 
+  def update
+    @board = current_user.boards.find(params[:id])
+    @board.set_board_attributes(params[:board])
+    @board.save!
+    respond_with @board
+  end
+
 
   private
 

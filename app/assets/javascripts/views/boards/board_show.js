@@ -9,9 +9,7 @@ Failboat.Views.BoardShow = Backbone.View.extend({
 
   events: {
     'submit #new_task': 'createTask',
-    'click #delete_board': 'deleteBoard',
-    'click #edit_name_button': 'editName',
-    'click #edit_users': 'editUsers'
+    'click #delete_board': 'deleteBoard'
   },
 
   initialize: function() {
@@ -20,7 +18,7 @@ Failboat.Views.BoardShow = Backbone.View.extend({
     this.model.on('add:tasks', this.addOne, this);
     this.model.on('change:tasks:done', this.addAll, this);
     this.model.on('change:tasks:name', this.render, this);
-    this.model.on('change:name', this.render, this);       
+    // this.model.on('change:name', this.render, this);       
     this.model.on('destroy', this.remove, this);
   },
 
@@ -75,21 +73,7 @@ Failboat.Views.BoardShow = Backbone.View.extend({
         alert('error');
       }
     });
-  },
-
-  editName: function(event) {
-    event.preventDefault();
-    $('#name').replaceWith(JST['boards/name_form']({name: this.model.get('name')}));
-  },
-
-  updateName: function() {
-    // $('')
-  }, 
-
-  editUsers: function() {
-    console.log('all');
   }
-
 
 
 });

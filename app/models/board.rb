@@ -15,4 +15,8 @@ class Board < ActiveRecord::Base
   has_many :users, through: :board_users
 
   has_many :tasks, dependent: :destroy
+
+  def set_board_attributes(params)
+    self.name = params[:name]
+  end
 end
