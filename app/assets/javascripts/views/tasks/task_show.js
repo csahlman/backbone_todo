@@ -13,7 +13,7 @@ Failboat.Views.TaskShow = Backbone.View.extend({
     'submit #edit_description_form': 'editDescription',
     'submit #edit_name_form': 'editName',
     // 'blur #edit_name_form': 'closeNameForm',
-    'click .toggle': 'toggleDone',
+    'click #toggle': 'toggleDone',
     'submit #add_comment': 'createComment'  
   },
 
@@ -30,7 +30,6 @@ Failboat.Views.TaskShow = Backbone.View.extend({
   render: function() {
     var comments = this.model.get('comments');
     var board_id = this.model.get('board')
-    console.log(this.model.get('board'));
     this.$el.html(this.template({
       name: this.model.escape('name'),
       description: this.model.escape('description'),
@@ -61,7 +60,7 @@ Failboat.Views.TaskShow = Backbone.View.extend({
     event.preventDefault();
     var description = $('#edit_task_description').val();
     if(description === this.model.get('description')) {
-      this.model.trigger('change');
+      this.model.trigger('change:description');
     }
     else {
       this.model.save({description: description}, { 

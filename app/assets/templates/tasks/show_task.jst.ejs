@@ -3,7 +3,7 @@
     <span id="name"><%= name %></span> 
     <a href="#" class="btn btn-success" id="edit_name_button">Edit Name</a>
     <a href="#" class="btn btn-info" id="edit_users">Edit Users</a>
-    <a href="#" class="btn btn-danger" id="delete_board">Delete Board</a>
+    <a href="#" class="btn btn-danger" id="delete_board">Delete Task</a>
   </h1>
 </div>
 <div id="breadcrumb">
@@ -24,11 +24,12 @@
             </div> <!-- widget-title -->
             <div class="widget-content">
               <h3><%= name %></h3>
-              <p id="description"><%= description %></p>
-
-              <span id="edit_description">
-                <a href="#" class="edit">Edit</a>
-              </span>
+              <% if(done) { %>
+                <a href='#' id="toggle" class="btn btn-small btn-info">Mark As Unfinished</a>
+              <% } else { %>
+                <a href='#' id="toggle" class="btn btn-small btn-danger">Mark As Finished</a>
+              <% } %>
+              <p id="description"><%= description %> <a href="#" class="edit">Edit</a></p>
               <form id="add_comment">
                 <input type="text" name="name" id="new_comment">
                 <input type="submit" value="Add New Comment">

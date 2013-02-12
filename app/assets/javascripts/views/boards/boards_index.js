@@ -16,8 +16,12 @@ Failboat.Views.BoardsIndex = Backbone.View.extend({
   },
 
   render: function() {
-    console.log('rendering boards index');
-    this.$el.html(this.template({user: Failboat.currentUser, boards: this.collection.models}));
+    if(Failboat.currentUser) {
+      this.$el.html(this.template({
+        email: Failboat.currentUser.get('email'),
+        length: this.collection.length 
+      }));
+    }
     this.collection.each(this.addOne);
     return this;
   },
