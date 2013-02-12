@@ -1,15 +1,16 @@
 Failboat.Views.BoardShow = Backbone.View.extend({
-  tagName: 'div',
+  tagName: 'span',
 
-  id: 'left',
-
-  className: "span6", 
+  id: 'board_show',
 
   template: JST['boards/show_board'],
 
   events: {
     'submit #new_task': 'createTask',
-    'click #delete_board': 'deleteBoard'
+    'click #delete_board': 'deleteBoard',
+    'click #edit_name_button': 'editName',
+    'click #edit_users': 'editUsers',
+    'submit #edit_board_name_form': 'updateName'
   },
 
   initialize: function() {
@@ -23,9 +24,7 @@ Failboat.Views.BoardShow = Backbone.View.extend({
   },
 
   render: function() {
-    var boardHeaderView = new Failboat.Views.BoardHeaderView({model: this.model});
     var name = this.model.escape('name');
-    $('#page_header').html(boardHeaderView.render().el);
     this.$el.html(this.template({
       name: this.model.escape('name')
     }));
@@ -73,6 +72,37 @@ Failboat.Views.BoardShow = Backbone.View.extend({
         alert('error');
       }
     });
+  },
+
+  editName: function(event) {
+    event.preventDefault();
+    $('#name').replaceWith(JST['boards/name_form']({name: this.model.get('name')}));
+    $('#edit_board_name').focus();
+    $('#edit_name_button').remove();
+  },
+
+  updateName: function(event) {
+    event.preventDefault();
+    var name = $('#edit_board_name').val().trim();
+    if(this.model.get('name') === name || name.trim() === '') {
+      this.model.trigger('change:name');
+      return false;
+    } else {
+      this.model.set({name: name});
+      this.model.save({}, {
+        wait: true,
+        success: function() {
+          console.log('success');
+        },
+        error: function() {
+          console.log('error updating name');
+        }
+      });
+    }
+  }, 
+
+  editUsers: function() {
+    console.log('all');
   }
 
 

@@ -15,12 +15,12 @@ Failboat.Routers.Tasks = Backbone.Router.extend({
 
   signIn: function() {
     var view = new Failboat.Views.Signup({});
-    $('#main').html(view.render().el);
+    $('#content').html(view.render().el);
   },
 
   logIn: function() {
     var loginView = new Failboat.Views.Login({});
-    $('#main').html(loginView.render().el);
+    $('#content').html(loginView.render().el);
   },
 
   signOut: function() {
@@ -38,7 +38,7 @@ Failboat.Routers.Tasks = Backbone.Router.extend({
       model: Failboat.currentUser, 
       collection: this.boardsCollection
     });
-    $('#main').html(boardView.render().el);
+    $('#content').html(boardView.render().el);
 
   },
 
@@ -57,7 +57,7 @@ Failboat.Routers.Tasks = Backbone.Router.extend({
           model: self.board, 
           board: id
         });
-        $('#main').html(self.boardShowView.render().el);
+        $('#content').html(self.boardShowView.render().el);
         if(self.requestedId) self.showTask(id, self.requestedId);
       }
     });
@@ -82,7 +82,7 @@ Failboat.Routers.Tasks = Backbone.Router.extend({
       if(this.task) {
         this.task.fetch();
         var taskView = new Failboat.Views.TaskShow({model: this.task});
-        $('#main').html(taskView.render().el);
+        $('#content').html(taskView.render().el);
       }
     } else if (this.board && !this.task) {
         console.log('found the board, not the task');

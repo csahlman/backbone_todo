@@ -11,7 +11,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20130208122737) do
+ActiveRecord::Schema.define(:version => 20130212162126) do
 
   create_table "board_users", :force => true do |t|
     t.integer  "user_id"
@@ -46,10 +46,11 @@ ActiveRecord::Schema.define(:version => 20130208122737) do
   create_table "tasks", :force => true do |t|
     t.string   "name"
     t.boolean  "done"
-    t.datetime "created_at",  :null => false
-    t.datetime "updated_at",  :null => false
+    t.datetime "created_at",                                     :null => false
+    t.datetime "updated_at",                                     :null => false
     t.text     "description"
     t.integer  "board_id"
+    t.datetime "due_date",    :default => '2013-02-14 18:08:24'
   end
 
   create_table "users", :force => true do |t|

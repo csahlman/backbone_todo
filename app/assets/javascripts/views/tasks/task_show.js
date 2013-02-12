@@ -1,14 +1,14 @@
 Failboat.Views.TaskShow = Backbone.View.extend({
-  id: 'full-span',
+  tagName: 'span',
 
-  className: 'span12',
+  id: 'task_show',
 
   template: JST['tasks/show_task'],
 
   model: Failboat.Models.Task,
 
   events: {
-    'dblclick #name_header': 'renderNameForm',
+    'click #edit_name_button': 'renderNameForm',
     'click .edit': 'renderForm',
     'submit #edit_description_form': 'editDescription',
     'submit #edit_name_form': 'editName',
@@ -29,10 +29,13 @@ Failboat.Views.TaskShow = Backbone.View.extend({
 
   render: function() {
     var comments = this.model.get('comments');
+    var board_id = this.model.get('board')
+    console.log(this.model.get('board'));
     this.$el.html(this.template({
       name: this.model.escape('name'),
       description: this.model.escape('description'),
-      done: this.model.get('done')
+      done: this.model.get('done'),
+      board_id: board_id
     }));
     comments.each(this.renderComment);
     return this;
@@ -40,17 +43,18 @@ Failboat.Views.TaskShow = Backbone.View.extend({
 
   renderComment: function(comment) {
     var commentView = new Failboat.Views.Comment({model: comment});
-    $('#comments').append(commentView.render().el);
+    $('#comments').prepend(commentView.render().el);
   },
 
   renderForm: function(event) {
     event.preventDefault();
-    $('#edit_description').html(JST['tasks/edit_description_form']({task: this.model}));
+    $('#description').html(JST['tasks/edit_description_form']({task: this.model}));
   },
 
-  renderNameForm: function() {
-    $('#name_header').html(JST['tasks/edit_name_form']({task: this.model}));
-    $('#name_header').focus();
+  renderNameForm: function(event) {
+    event.preventDefault();
+    $('#name').html(JST['tasks/edit_name_form']({task: this.model}));
+    $('#name').focus();
   },
 
   editDescription: function(event) {

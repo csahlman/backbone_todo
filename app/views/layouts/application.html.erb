@@ -50,19 +50,17 @@
   </div>
 
   
-  <div id="content">
+  <div id="content" class="main-content">
     <div id="content-header">
       <h1 id="page_header"></h1>
     </div>
     <div id="breadcrumb">
-      <%= yield(:bread_crumbs) if content_for?(:bread_crumbs) %>
     </div>
-    <div class="container-fluid">
+    <!-- <div class="container-fluid">
       <div class="row-fluid">
         <div class="span12 center">
           <div class="row-fluid" id="main">
-          <%= bootstrap_flash %>
-          <%= yield %>         
+     
           </div>
         </div>  
       </div>
@@ -71,8 +69,10 @@
           2013 &copy; Shitty 1 page app
         </div>
       </div>
-    </div>
-    </div>
+    </div> -->
+
+
+  </div>
     <%= javascript_include_tag "application" %>
   </body>
 </html>

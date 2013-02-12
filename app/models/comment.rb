@@ -18,5 +18,9 @@ class Comment < ActiveRecord::Base
   belongs_to :user
   belongs_to :task
 
-  default_scope order('created_at desc').limit(5)
+  # default_scope order('created_at DESC')
+
+  
+
+
 end

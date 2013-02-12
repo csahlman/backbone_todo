@@ -23,6 +23,7 @@ class Task < ActiveRecord::Base
 
   belongs_to :board
 
+
   def set_task_attributes(params)
     self.done = params[:done]
     self.name = params[:name]

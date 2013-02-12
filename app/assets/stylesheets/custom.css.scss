@@ -12,18 +12,27 @@
   float: right;
 }
 
-.widget-box {
-  margin-top: -10px;
-}
+// .widget-box {
+//   // margin-top: -10px;
+// }
 
 #edit_board_name_form {
   display: inline; 
+}
+
+#edit_name_form {
+  display: inline;
 }
 
 .nopadding {
   h3 {
     margin-left: 8px;
   }
+}
+
+#edit_task_description {
+  width: 80%;
+  height: 80px;
 }
 // #header {
 //   width: 1000px;

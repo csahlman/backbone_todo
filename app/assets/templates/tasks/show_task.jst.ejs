@@ -1,39 +1,60 @@
-<div class="row-fluid">
-  <div class="span6" id="task_div">
-    <div class="widget-box">
-      <div class="widget-title">
-        <h5><%= name %></h5>
-        <span title="current" class="label label-info tip-left">
-          Here we go bro
-        </span>
-      </div>
-      <div class="widget-content">
-        <h3><%= name %></h3>
-        <p><%= description %></p>
-
-        <span id="edit_description">
-          <a href="#" class="edit">Edit</a>
-        </span>
-        <form id="add_comment">
-          <input type="text" name="name" id="new_comment">
-          <input type="submit" value="Add New Comment">
-        </form>
-      </div>     
-    </div>
-  </div>
-  <div class="span6" id="comment_div">
-    <div class="widget-box">
-      <div class="widget-title">
-        <h5>Task information</h5>
-      </div>
-      <div class="widget-content nopadding">
-        <h3>Comments</h3>
-        <ul class="recent-comments" id="comments">
-              
-        </ul>
-      </div>
-    </div>
-  </div>
+<div id="content-header">
+  <h1 id="page_header">
+    <span id="name"><%= name %></span> 
+    <a href="#" class="btn btn-success" id="edit_name_button">Edit Name</a>
+    <a href="#" class="btn btn-info" id="edit_users">Edit Users</a>
+    <a href="#" class="btn btn-danger" id="delete_board">Delete Board</a>
+  </h1>
 </div>
+<div id="breadcrumb">
+  <a href="#boards/<%= board_id %>">Back To Board</a>
+</div>
+<div class="container-fluid">
+  <div class="row-fluid">
+    <div class="span12 center">
+      <div class="row-fluid" id="main">
+        <!-- this is where we put the yield content -->
+        <div class="span6" id="task_div">
+          <div class="widget-box">
+            <div class="widget-title">
+              <h5><%= name %></h5>
+              <span title="current" class="label label-info tip-left">
+                Here we go bro
+              </span>
+            </div> <!-- widget-title -->
+            <div class="widget-content">
+              <h3><%= name %></h3>
+              <p id="description"><%= description %></p>
 
-
+              <span id="edit_description">
+                <a href="#" class="edit">Edit</a>
+              </span>
+              <form id="add_comment">
+                <input type="text" name="name" id="new_comment">
+                <input type="submit" value="Add New Comment">
+              </form>
+            </div> <!-- widget-content -->   
+          </div> <!-- widget-box -->
+        </div> <!-- span6 -->
+        <div class="span6" id="comment_div">
+          <div class="widget-box">
+            <div class="widget-title">
+              <h5>Task information</h5>
+            </div> <!-- widget-title -->
+            <div class="widget-content nopadding">
+              <h3>Comments</h3>
+              <ul class="recent-comments" id="comments">
+                    
+              </ul>
+            </div> <!-- widget-content -->
+          </div> <!-- widget-box -->
+        </div> <!-- span6 -->
+      </div> <!-- rowfluid -->
+    </div> <!-- span12 center -->
+  </div> <!-- row-fluid -->
+  <div class="row-fluid">
+    <div id="footer" class="span12">
+      2013 &copy; Shitty 1 page app
+    </div>
+  </div>
+</div> <!-- container-fluid -->
