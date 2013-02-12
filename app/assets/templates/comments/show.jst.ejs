@@ -1,3 +1,5 @@
-<%= comment.escape('poster_name') %> posted 
-  <strong><%= comment.escape('content') %></strong>
-  at <i><%= comment.get('created_at') %></i>
+<div class="comments">
+  <span class="user-info"><%= poster_name %> at <%= created_at %></span>
+  <p><%= content %></p>
+</div>
+

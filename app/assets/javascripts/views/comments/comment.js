@@ -1,8 +1,6 @@
 Failboat.Views.Comment = Backbone.View.extend({
   tagName: 'li',
 
-  className: 'comment',
-
   template: JST['comments/show'],
 
   initialize: function() {
@@ -11,7 +9,11 @@ Failboat.Views.Comment = Backbone.View.extend({
   },
 
   render: function() {
-    this.$el.html(this.template({comment: this.model}));
+    this.$el.html(this.template({
+      poster_name: this.model.escape('poster_name'),
+      content: this.model.escape('content'),
+      created_at: this.model.get('created_at')
+    }));
     return this;
   }
 
