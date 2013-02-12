@@ -1,0 +1,39 @@
+<div class="row-fluid">
+  <div class="span6" id="task_div">
+    <div class="widget-box">
+      <div class="widget-title">
+        <h5><%= name %></h5>
+        <span title="current" class="label label-info tip-left">
+          Here we go bro
+        </span>
+      </div>
+      <div class="widget-content">
+        <h3><%= name %></h3>
+        <p><%= description %></p>
+
+        <span id="edit_description">
+          <a href="#" class="edit">Edit</a>
+        </span>
+        <form id="add_comment">
+          <input type="text" name="name" id="new_comment">
+          <input type="submit" value="Add New Comment">
+        </form>
+      </div>     
+    </div>
+  </div>
+  <div class="span6" id="comment_div">
+    <div class="widget-box">
+      <div class="widget-title">
+        <h5>Task information</h5>
+      </div>
+      <div class="widget-content">
+
+        <ul class="site-stats" id="comments">
+              
+        </ul>
+      </div>
+    </div>
+  </div>
+</div>
+
+

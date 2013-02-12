@@ -1,6 +1,6 @@
 source 'https://rubygems.org'
 
-gem 'rails', '3.2.11'
+gem 'rails', '3.2.12'
 
 # Bundle edge Rails instead:
 # gem 'rails', :git => 'git://github.com/rails/rails.git'
@@ -12,7 +12,7 @@ end
 group :test, :development do 
   gem 'annotate'
   gem 'sqlite3'
-  gem 'mongrel'
+  gem 'mongrel', '>= 1.2.0.pre2'
 end
 
 # Gems used only for assets and not required

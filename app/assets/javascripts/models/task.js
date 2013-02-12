@@ -40,6 +40,10 @@ Failboat.Models.Task = Backbone.RelationalModel.extend({
 
   isFinished: function() {
     return (this.get('done') === true);
+  },
+
+  anyComments: function() {
+    return (this.get('comments').length > 0);
   }
 
 });

@@ -15,16 +15,12 @@ Failboat.Routers.Tasks = Backbone.Router.extend({
 
   signIn: function() {
     var view = new Failboat.Views.Signup({});
-    // var infoView = new Failboat.Views.Info();
-    $('#container').html(view.render().el);
-    // $('#sidebar').html(infoView.render().el);
+    $('#main').html(view.render().el);
   },
 
   logIn: function() {
     var loginView = new Failboat.Views.Login({});
-    // var infoView = new Failboat.Views.Info();
-    $('#container').html(loginView.render().el);
-    // $('#sidebar').html(infoView.render().el);
+    $('#main').html(loginView.render().el);
   },
 
   signOut: function() {
@@ -42,9 +38,8 @@ Failboat.Routers.Tasks = Backbone.Router.extend({
       model: Failboat.currentUser, 
       collection: this.boardsCollection
     });
-    $('#container').html(boardView.render().el);
-    // var sidebarView = new Failboat.Views.Sidebar({model: Failboat.currentUser});
-    // $('#sidebar').html(sidebarView.render().el);
+    $('#main').html(boardView.render().el);
+
   },
 
   showBoard: function(id) {
@@ -62,7 +57,7 @@ Failboat.Routers.Tasks = Backbone.Router.extend({
           model: self.board, 
           board: id
         });
-        $('#container').html(self.boardShowView.render().el);
+        $('#main').html(self.boardShowView.render().el);
         if(self.requestedId) self.showTask(id, self.requestedId);
       }
     });
@@ -76,7 +71,6 @@ Failboat.Routers.Tasks = Backbone.Router.extend({
       this.navigate('sign_in', true);
       return false;
     }
-    $('#right-span').remove();
     var self = this;
     if(this.board) {
       var tasks = this.board.get('tasks')
@@ -88,7 +82,7 @@ Failboat.Routers.Tasks = Backbone.Router.extend({
       if(this.task) {
         this.task.fetch();
         var taskView = new Failboat.Views.TaskShow({model: this.task});
-        $('#container').append(taskView.render().el);
+        $('#main').html(taskView.render().el);
       }
     } else if (this.board && !this.task) {
         console.log('found the board, not the task');
@@ -96,8 +90,6 @@ Failboat.Routers.Tasks = Backbone.Router.extend({
       this.requestedId = id;
       this.showBoard(boardId);
     }
-    // var sidebarView = new Failboat.Views.Sidebar({model: Failboat.currentUser});
-    // $('#sidebar').html(sidebarView.render().el);  
   }
 
 });

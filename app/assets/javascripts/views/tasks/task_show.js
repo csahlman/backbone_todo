@@ -1,9 +1,9 @@
 Failboat.Views.TaskShow = Backbone.View.extend({
-  id: 'right-span',
+  id: 'full-span',
 
-  className: 'span6 well',
+  className: 'span12',
 
-  template: JST['tasks/show'],
+  template: JST['tasks/show_task'],
 
   model: Failboat.Models.Task,
 
@@ -14,7 +14,7 @@ Failboat.Views.TaskShow = Backbone.View.extend({
     'submit #edit_name_form': 'editName',
     // 'blur #edit_name_form': 'closeNameForm',
     'click .toggle': 'toggleDone',
-    'submit #new_comment_form': 'createComment'  
+    'submit #add_comment': 'createComment'  
   },
 
   initialize: function() {
@@ -28,9 +28,12 @@ Failboat.Views.TaskShow = Backbone.View.extend({
   },
 
   render: function() {
-    console.log('in the task show render');
-    $(this.el).html(this.template({task: this.model}));
     var comments = this.model.get('comments');
+    this.$el.html(this.template({
+      name: this.model.escape('name'),
+      description: this.model.escape('description'),
+      done: this.model.get('done')
+    }));
     comments.each(this.renderComment);
     return this;
   },
@@ -93,12 +96,12 @@ Failboat.Views.TaskShow = Backbone.View.extend({
   createComment: function(event) {
     console.log('creating comment');
     event.preventDefault();
-    var content = $('#new_comment_content').val();
+    var content = $('#new_comment').val();
     var comment = new Failboat.Models.Comment({task_id: this.model.get('id'), content: content});
     comment.save({}, {
       wait: true,
       success: function() {
-        $('#new_comment_content').val('');
+        $('#new_comment').val('');
       },
       error: function() {
         console.log('error creating comment');

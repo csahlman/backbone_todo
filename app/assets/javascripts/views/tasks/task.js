@@ -50,12 +50,12 @@ Failboat.Views.Task = Backbone.View.extend({
       $li.appendTo('#tasks');
       $li.removeClass('finished');
     }
-    // return this;
   },
 
   removeItem: function(event) {
     event.preventDefault();
-    this.model.destroy();
+    var confirmation = confirm('Are you sure?');
+    if(confirmation) this.model.destroy();
   }
 
 });

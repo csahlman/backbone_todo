@@ -20,7 +20,7 @@ Failboat.Views.BoardHeaderView = Backbone.View.extend({
   },
 
   render: function() {
-    var name = this.model.get('name');
+    var name = this.model.escape('name');
     this.$el.html(this.template({name: name}));
     return this;
   },
