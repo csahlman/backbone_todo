@@ -1,9 +1,10 @@
 class BoardsController < ApplicationController
-  respond_to :json
-  before_filter :authenticate_user, only: [ :create, :destroy, :show ]
+  respond_to :json, :html
+  before_filter :authenticate_user
 
   def index
-    @boards = current_user.boards.includes(:tasks)
+    @boards = boards_visible_to_current_user
+    @users = user_id_and_email_attributes
     respond_with @boards
   end
 
@@ -32,6 +33,14 @@ class BoardsController < ApplicationController
 
     def authenticate_user
       respond_with status: 404 unless user_signed_in?
+    end
+
+    def boards_visible_to_current_user
+      current_user.boards
+    end
+
+    def user_id_and_email_attributes
+      User.all.map { |user| { id: user.id, email: user.email } }
     end
 
 end

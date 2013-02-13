@@ -15,7 +15,7 @@ Failboat::Application.routes.draw do
     delete 'logout' => :destroy
   end  
 
-  root to: 'pages#index'
+  root to: 'boards#index'
 
   # The priority is based upon order of creation:
   # first created -> highest priority.

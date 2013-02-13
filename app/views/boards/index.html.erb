@@ -1,0 +1,20 @@
+<script type="text/json" id="bootstrap">
+  { 
+    "boards": <%= @boards.to_json %>,
+    "users": <%= @users.to_json %>
+  }
+</script>
+
+<%= content_for :javascript do %>
+  <script type="text/javascript">
+    $(function () {
+      var div, data;
+      div = $('<div></div>');
+      div.html($('#bootstrap').text());
+      data = JSON.parse(div.text());
+
+      Failboat.initialize(data);
+    });
+  </script>
+<% end %>
+<!-- MAKE SURE TO NOT REMOVE YOUR YIELD IN APP.HTML OR THIS WILL BUG YOU ALL DAY -->

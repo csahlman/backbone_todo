@@ -18,7 +18,6 @@ Failboat.Views.TaskShow = Backbone.View.extend({
   },
 
   initialize: function() {
-    console.log('initializing task show');
     this.model.fetchRelated();
     this.model.on('destroy', this.remove, this);
     this.model.on('change:description', this.render, this);
@@ -31,7 +30,6 @@ Failboat.Views.TaskShow = Backbone.View.extend({
   render: function() {
     var comments = this.model.get('comments');
     var board = this.model.get('board_id').id;
-    console.log(board);
     this.$el.html(this.template({
       name: this.model.escape('name'),
       description: this.model.escape('description'),

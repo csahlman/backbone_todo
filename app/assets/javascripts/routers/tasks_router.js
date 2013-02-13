@@ -9,8 +9,10 @@ Failboat.Routers.Tasks = Backbone.Router.extend({
     "sign_out": "signOut"
   },
 
-  initialize: function() {
+  initialize: function(options) {
     console.log('app initiated');
+    this.boardsCollection = options.boards;
+    this.users = options.users;
   },
 
   signIn: function() {
@@ -32,14 +34,16 @@ Failboat.Routers.Tasks = Backbone.Router.extend({
       this.navigate('sign_in', true);
       return false;
     }
-    if(!this.boardsCollection) this.boardsCollection = new Failboat.Collections.Boards();
-    this.boardsCollection.fetch();    
-    var boardView = new Failboat.Views.BoardsIndex({
-      model: Failboat.currentUser, 
-      collection: this.boardsCollection
-    });
-    $('#content').html(boardView.render().el);
-
+    if(this.boardView) {
+      this.boardView.delegateEvents();
+    } else {
+      this.boardView = new Failboat.Views.BoardsIndex({
+        model: Failboat.currentUser, 
+        collection: this.boardsCollection
+      });
+    }
+    $('#content').html(this.boardView.render().el);
+    this.boardsCollection.trigger('reset');
   },
 
   showBoard: function(id) {
@@ -48,60 +52,54 @@ Failboat.Routers.Tasks = Backbone.Router.extend({
       return false;
     }
     var self = this;
-    if(this.board && this.board.get('id') == id) {
+    if(this.board && this.board.get('id') == id && this.boardShowView) {
       this.board.fetch();
       this.boardShowView.delegateEvents();
       // seems necessary to delegateEvents if we're recyling a view, otherwise event handlers are not held
       $('#content').html(this.boardShowView.render().el);
     } else {
-      if(!this.boardsCollection) this.boardsCollection = new Failboat.Collections.Boards();
-      this.boardsCollection.fetch({
-        success: function() {
-          self.board = self.boardsCollection.get(id);
-          if(self.boardShowView) self.boardShowView.remove();
-          self.boardShowView = new Failboat.Views.BoardShow({
-            model: self.board, 
-            board: id
-          });
-          $('#content').html(self.boardShowView.render().el);
-          if(self.requestedId) self.showTask(id, self.requestedId);
-        }
-      });
+      if(!this.board) this.board = this.boardsCollection.get(id);
+      if(this.boardShowView && this.boardShowView.model.get('id') == id) {
+        this.boardShowView.delegateEvents();
+        $('#content').html(this.boardShowView.render().el);
+      } else {
+        this.boardShowView = new Failboat.Views.BoardShow({
+          model: this.board,
+          board: id
+        });
+        $('#content').html(this.boardShowView.render().el);
+      }
     }
   },
 
   showTask: function(boardId, id) {
-    this.requestedId = null;
     if(!Failboat.session.authenticated()) {
       this.navigate('sign_in', true);
       return false;
     }
     var self = this;
     if(this.taskView && this.taskView.model.get('id') == id) {
-      this.task.fetch();
       this.taskView.delegateEvents();
-      $('#content').html(this.taskView.render().el);
-    } else if(this.board) {
-      var tasks = this.board.get('tasks')
-      tasks.each(function(task) {
-        if(task.get('id') == id) {
-          self.task = task;
+      this.task.fetch();
+      $('#content').html(this.taskView.render().el);   
+    } else {
+      if(!this.board) this.board = this.boardsCollection.get(boardId);
+      this.board.fetch({
+        success: function() {
+          var tasks = self.board.get('tasks')
+          console.log(self.board);
+          tasks.each(function(task) {
+            if(task.get('id') == id) {
+              console.log(task);
+              self.task = task;
+            }
+          });
+          console.log(self.task);
+          self.task.fetch();
+          self.taskView = new Failboat.Views.TaskShow({model: self.task});
+          $('#content').html(self.taskView.render().el);   
         }
       });
-      if(this.task) {
-        this.task.fetch();
-        if(this.taskView) this.taskView.remove();
-        this.taskView = new Failboat.Views.TaskShow({model: this.task});
-        $('#content').html(this.taskView.render().el);
-      }
-    } else if (this.board && !this.task) {
-        console.log('found the board, not the task');
-    } else {
-      this.requestedId = id;
-      this.showBoard(boardId);
     }
-    
-    
   }
-
 });
