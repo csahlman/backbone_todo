@@ -48,21 +48,26 @@ Failboat.Routers.Tasks = Backbone.Router.extend({
       return false;
     }
     var self = this;
-    if(!this.boardsCollection) this.boardsCollection = new Failboat.Collections.Boards();
-    this.boardsCollection.fetch({
-      success: function() {
-        self.board = self.boardsCollection.get(id);
-        if(self.boardShowView) self.boardShowView.remove();
-        self.boardShowView = new Failboat.Views.BoardShow({
-          model: self.board, 
-          board: id
-        });
-        $('#content').html(self.boardShowView.render().el);
-        if(self.requestedId) self.showTask(id, self.requestedId);
-      }
-    });
-    // var sidebarView = new Failboat.Views.Sidebar({model: Failboat.currentUser});
-    // $('#sidebar').html(sidebarView.render().el);
+    if(this.board && this.board.get('id') == id) {
+      this.board.fetch();
+      this.boardShowView.delegateEvents();
+      // seems necessary to delegateEvents if we're recyling a view, otherwise event handlers are not held
+      $('#content').html(this.boardShowView.render().el);
+    } else {
+      if(!this.boardsCollection) this.boardsCollection = new Failboat.Collections.Boards();
+      this.boardsCollection.fetch({
+        success: function() {
+          self.board = self.boardsCollection.get(id);
+          if(self.boardShowView) self.boardShowView.remove();
+          self.boardShowView = new Failboat.Views.BoardShow({
+            model: self.board, 
+            board: id
+          });
+          $('#content').html(self.boardShowView.render().el);
+          if(self.requestedId) self.showTask(id, self.requestedId);
+        }
+      });
+    }
   },
 
   showTask: function(boardId, id) {
@@ -81,8 +86,9 @@ Failboat.Routers.Tasks = Backbone.Router.extend({
       });
       if(this.task) {
         this.task.fetch();
-        var taskView = new Failboat.Views.TaskShow({model: this.task});
-        $('#content').html(taskView.render().el);
+        if(this.taskView) this.taskView.remove();
+        this.taskView = new Failboat.Views.TaskShow({model: this.task});
+        $('#content').html(this.taskView.render().el);
       }
     } else if (this.board && !this.task) {
         console.log('found the board, not the task');
