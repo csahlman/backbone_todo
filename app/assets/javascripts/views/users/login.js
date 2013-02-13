@@ -27,6 +27,7 @@ Failboat.Views.Login = Backbone.View.extend({
       success: function(userSession, response) {
         Failboat.session.save({remember_token: response.remember_token, id: response.id })
         Failboat.currentUser = new Failboat.Models.User(response);
+        Failboat.appRouter.boardsCollection.fetch();
         Failboat.appRouter.navigate('', true);
         if(Failboat.appRouter.collection) Failboat.appRouter.collection.trigger('reset');
       },
