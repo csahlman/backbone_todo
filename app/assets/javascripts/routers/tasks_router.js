@@ -77,7 +77,11 @@ Failboat.Routers.Tasks = Backbone.Router.extend({
       return false;
     }
     var self = this;
-    if(this.board) {
+    if(this.taskView && this.taskView.model.get('id') == id) {
+      this.task.fetch();
+      this.taskView.delegateEvents();
+      $('#content').html(this.taskView.render().el);
+    } else if(this.board) {
       var tasks = this.board.get('tasks')
       tasks.each(function(task) {
         if(task.get('id') == id) {
@@ -96,6 +100,8 @@ Failboat.Routers.Tasks = Backbone.Router.extend({
       this.requestedId = id;
       this.showBoard(boardId);
     }
+    
+    
   }
 
 });

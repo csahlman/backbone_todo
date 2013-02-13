@@ -16,7 +16,7 @@ Failboat.Views.BoardShow = Backbone.View.extend({
   initialize: function() {
     this.model.fetch();
     this.model.on('reset', this.render, this);
-    this.model.on('change', this.render, this);
+    this.model.on('change:name', this.render, this);
     this.model.on('add:tasks', this.addOne, this);
     this.model.on('change:tasks:done', this.addAll, this);
     // this.model.on('change:tasks:name', this.render, this);
@@ -25,19 +25,23 @@ Failboat.Views.BoardShow = Backbone.View.extend({
   },
 
   render: function() {
-    console.log('board show render');
+    // if(this.model.get('tasks').length > 0 &&)
     var name = this.model.escape('name');
     var tasks = this.model.get('tasks');
     this.$el.html(this.template({
       name: this.model.escape('name')
     }));
+    if(tasks.length > 0 && (this.$('#finished').html().trim() === '') && (this.$('#tasks').html().trim() === '')) {
+      this.addAll(tasks);
+      // if we rerender and it doesn't change the add:tasks, manually readd them
+    }
     // tasks.each(this.addOne);
     return this;
   },
 
-  addAll: function() {
+  addAll: function(tasks) {
     console.log('hitting addAll');
-    this.model.get('tasks').each(this.addOne);
+    tasks.each(this.addOne);
   },
 
   addOne: function(task) {
