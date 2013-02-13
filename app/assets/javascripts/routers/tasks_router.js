@@ -58,7 +58,7 @@ Failboat.Routers.Tasks = Backbone.Router.extend({
       // seems necessary to delegateEvents if we're recyling a view, otherwise event handlers are not held
       $('#content').html(this.boardShowView.render().el);
     } else {
-      if(!this.board) this.board = this.boardsCollection.get(id);
+      this.board = this.boardsCollection.get(id);
       if(this.boardShowView && this.boardShowView.model.get('id') == id) {
         this.boardShowView.delegateEvents();
         $('#content').html(this.boardShowView.render().el);
