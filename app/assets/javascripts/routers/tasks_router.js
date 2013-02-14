@@ -18,7 +18,7 @@ Failboat.Routers.Tasks = Support.SwappingRouter.extend({
 
   signIn: function() {
     var signInView = new Failboat.Views.Signup({});
-    $('#content').html(view.render().el);
+    // $('#content').html(signInView.render().el);
     this.swap(signInView);
   },
 
@@ -42,7 +42,7 @@ Failboat.Routers.Tasks = Support.SwappingRouter.extend({
       collection: this.boardsCollection
     });
     this.swap(boardView);
-    this.boardsCollection.trigger('reset');
+    // this.boardsCollection.trigger('reset');
   },
 
   showBoard: function(id) {
@@ -52,8 +52,7 @@ Failboat.Routers.Tasks = Support.SwappingRouter.extend({
     }
     this.board = this.boardsCollection.get(id);
     var boardShowView = new Failboat.Views.BoardShow({
-      model: this.board,
-      board: id
+      model: this.board
     });
     this.swap(boardShowView);
     this.board.fetch();

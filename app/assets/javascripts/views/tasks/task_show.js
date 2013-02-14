@@ -1,4 +1,4 @@
-Failboat.Views.TaskShow = Support.CompositeView.extend({
+Failboat.Views.TaskShow = Backbone.Marionette.ItemView.extend({
   tagName: 'span',
 
   id: 'task_show',
@@ -30,8 +30,6 @@ Failboat.Views.TaskShow = Support.CompositeView.extend({
   },
 
   render: function() {
-    this._leaveChildren();
-    var comments = this.model.comments;
     var board_id = this.model.get('board_id')
     this.$el.html(this.template({
       name: this.model.escape('name'),
@@ -39,11 +37,15 @@ Failboat.Views.TaskShow = Support.CompositeView.extend({
       done: this.model.get('done'),
       board_id: board_id
     }));
-    if(comments.length > 0 && (this.$('#comments').html().trim() === '')) {
-      this.addAll(comments);
-      // once again, if we render the whole page, it won't trigger an add:comments event
-      // so need to manually readd the comments after we fill the el
-    }    
+    // if(comments.length > 0 && (this.$('#comments').html().trim() === '')) {
+    //   this.addAll(comments);
+    //   // once again, if we render the whole page, it won't trigger an add:comments event
+    //   // so need to manually readd the comments after we fill the el
+    // }
+    var commentsCollectionView = new Failboat.Views.CommentCollectionView({
+      collection: this.model.comments
+    });
+    this.$('#comment').after(commentsCollectionView.render().el);    
     return this;
   },
 
@@ -56,7 +58,7 @@ Failboat.Views.TaskShow = Support.CompositeView.extend({
     console.log('rendering comment');
     var commentView = new Failboat.Views.Comment({model: comment});
     var container = this.$('#comments');
-    this.prependChildTo(commentView, container);
+    container.append(commentView.render().el);
   },
 
   renderForm: function(event) {

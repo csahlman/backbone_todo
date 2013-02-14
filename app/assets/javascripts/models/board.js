@@ -8,7 +8,6 @@ Failboat.Models.Board = Backbone.Model.extend({
 
   parseTasks: function() {
     this.tasks = new Failboat.Collections.Tasks(this.get('tasks'));
-    console.log('parseTasks');
   }
 
 

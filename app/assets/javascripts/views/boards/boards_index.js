@@ -1,7 +1,9 @@
-Failboat.Views.BoardsIndex = Support.CompositeView.extend({
+Failboat.Views.BoardsIndex = Backbone.Marionette.CollectionView.extend({
   tagName: 'span',
 
   id: "main",
+
+  itemView: Failboat.Views.Board,
 
   template: JST['boards/index'],
 
@@ -12,8 +14,8 @@ Failboat.Views.BoardsIndex = Support.CompositeView.extend({
   initialize: function() {
     _.bindAll(this, 'render', 'renderBoards', 'addOne');
     this.model.on('change', this.render, this);
-    this.collection.on('reset', this.render, this);
-    this.collection.on('change', this.render, this);
+    // this.collection.on('reset', this.render, this);
+    this.collection.on('change', this.renderBoards, this);
     this.collection.on('add', this.addOne, this);
     this.collection.on('remove', this.render, this);
     // this.collection.on('remove', this.remove, this);
@@ -21,6 +23,7 @@ Failboat.Views.BoardsIndex = Support.CompositeView.extend({
   },
 
   render: function() {
+    console.log('rendering boards index');
     this.renderTemplate();
     this.renderBoards();
     return this;
@@ -44,7 +47,7 @@ Failboat.Views.BoardsIndex = Support.CompositeView.extend({
     // this.$('#boards').append(boardView.render().el);
     //     var boardView = new Failboat.Views.Board({model: board});
     var boardContainer = this.$('#boards');
-    this.appendChildTo(boardView, boardContainer);
+    boardContainer.append(boardView.render().el);
   },
 
   createBoard: function() {

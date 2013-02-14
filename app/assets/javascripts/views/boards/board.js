@@ -1,4 +1,4 @@
-Failboat.Views.Board = Support.CompositeView.extend({
+Failboat.Views.Board = Backbone.Marionette.ItemView.extend({
   tagName: 'li',
 
   template: JST['boards/show'],

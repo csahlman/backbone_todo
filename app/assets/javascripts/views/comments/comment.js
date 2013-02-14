@@ -1,4 +1,4 @@
-Failboat.Views.Comment = Support.CompositeView.extend({
+Failboat.Views.Comment = Backbone.Marionette.ItemView.extend({
   tagName: 'li',
 
   template: JST['comments/show'],
@@ -9,7 +9,7 @@ Failboat.Views.Comment = Support.CompositeView.extend({
 
   initialize: function() {
     // this.model.on('change', this.render, this);
-    this.model.on('destroy', this.remove, this);
+    this.listenTo(this.model, 'destroy', this.remove);
   },
 
   render: function() {

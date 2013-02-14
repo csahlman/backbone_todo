@@ -1,4 +1,4 @@
-Failboat.Views.BoardShow = Support.CompositeView.extend({
+Failboat.Views.BoardShow = Backbone.Marionette.ItemView.extend({
   tagName: 'span',
 
   id: 'board_show',
@@ -14,41 +14,29 @@ Failboat.Views.BoardShow = Support.CompositeView.extend({
   },
 
   initialize: function() {
-    _.bindAll(this, 'render','addOne', 'addAll', 'createTask');
-    this.model.on('change', this.render, this);
+    _.bindAll(this, 'render', 'createTask');
+    this.model.on('change:tasks', this.renderTasks, this);
     this.model.on('change:name', this.render, this);   
     this.model.on('destroy', this.remove, this);
   },
 
   render: function() {
-    console.log('board show render');
-    var name = this.model.escape('name'),
-        tasks = this.model.tasks;
-    this.$el.empty().html(this.template({
+    console.log(this.model.tasks.toJSON());
+    var name = this.model.escape('name');
+    this.$el.html(this.template({
       name: this.model.escape('name')
     }));
-    if(tasks.length > 0 && (this.$('#finished').html().trim() === '') && (this.$('#tasks').html().trim() === '')) {
-      this.addAll();
-      // if we rerender and it doesn't change the add:tasks, manually readd them
+    if(this.model.tasks.length > 0) {
+      this.renderTasks();
     }
     return this;
   },
 
-  addAll: function() {
-    this._leaveChildren();
-    var tasks = this.model.tasks;
-    tasks.each(this.addOne);
-  },
-
-  addOne: function(task) {
-    var taskListItemView = new Failboat.Views.Task({model: task});
-    var container;
-    if(task.isFinished()) {
-      container = this.$('#finished');
-    } else {
-      container = this.$('#tasks');
-    }
-    this.appendChildTo(taskListItemView, container);
+  renderTasks: function() {
+    var taskCollectionView = new Failboat.Views.TasksIndex({
+      collection: this.model.tasks
+    });
+    this.$('#list').after(taskCollectionView.render().el);
   },
 
   deleteBoard: function(event) {
@@ -69,7 +57,7 @@ Failboat.Views.BoardShow = Support.CompositeView.extend({
       wait: true,
       success: function() {
         $('#new_task')[0].reset();
-        self.model.trigger('change');
+        // self.model.trigger('change');
       },
       error: function() {
         alert('error');

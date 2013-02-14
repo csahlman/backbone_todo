@@ -1,4 +1,4 @@
-Failboat.Views.Task = Support.CompositeView.extend({
+Failboat.Views.Task = Backbone.Marionette.ItemView.extend({
   tagName: 'li', 
 
   template: JST['tasks/task'],
@@ -37,11 +37,6 @@ Failboat.Views.Task = Support.CompositeView.extend({
       finished: finished
     }));
     return this;
-  },
-
-  leave: function() {
-    this.remove();
-    this.off();
   },
 
   toggleDone: function(event) {
