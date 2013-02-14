@@ -1,4 +1,4 @@
-Failboat.Views.BoardShow = Failboat.CompositeView.extend({
+Failboat.Views.BoardShow = Support.CompositeView.extend({
   tagName: 'span',
 
   id: 'board_show',
@@ -14,53 +14,41 @@ Failboat.Views.BoardShow = Failboat.CompositeView.extend({
   },
 
   initialize: function() {
-    this.model.on('reset', this.render, this);
+    _.bindAll(this, 'render','addOne', 'addAll', 'createTask');
     this.model.on('change', this.render, this);
-    this.model.on('change:name', this.render, this);
-    this.model.on('add:tasks', this.addOne, this);
-    // this.model.on('reset:tasks', this.addAll, this);
-    // this.model.on('change:tasks:name', this.render, this);
-    // this.model.on('change:name', this.render, this);       
+    this.model.on('change:name', this.render, this);   
     this.model.on('destroy', this.remove, this);
   },
 
   render: function() {
-    var name = this.model.escape('name');
-    var tasks = this.model.get('tasks');
-    this.$el.html(this.template({
+    console.log('board show render');
+    var name = this.model.escape('name'),
+        tasks = this.model.tasks;
+    this.$el.empty().html(this.template({
       name: this.model.escape('name')
     }));
-    // if(tasks.length > 0 && (this.$('#finished').html().trim() === '') && (this.$('#tasks').html().trim() === '')) {
-    //   this.addAll();
-    //   // if we rerender and it doesn't change the add:tasks, manually readd them
-    // }
+    if(tasks.length > 0 && (this.$('#finished').html().trim() === '') && (this.$('#tasks').html().trim() === '')) {
+      this.addAll();
+      // if we rerender and it doesn't change the add:tasks, manually readd them
+    }
     return this;
   },
 
-  leave: function() {
-    this.off();
-    this.remove();
-  },
-
   addAll: function() {
-    var tasks = this.model.get('tasks');
-    console.log('hitting addAll');
+    this._leaveChildren();
+    var tasks = this.model.tasks;
     tasks.each(this.addOne);
   },
 
   addOne: function(task) {
-    console.log('hitting addOne');
     var taskListItemView = new Failboat.Views.Task({model: task});
+    var container;
     if(task.isFinished()) {
-      this.$('#finished').append(taskListItemView.render().el);
+      container = this.$('#finished');
     } else {
-      this.$('#tasks').append(taskListItemView.render().el);
+      container = this.$('#tasks');
     }
-    taskListItemView.unbind();
-  },
-
-  recreateTaskListItem: function(task) {
-    console.log('recreate');
+    this.appendChildTo(taskListItemView, container);
   },
 
   deleteBoard: function(event) {
@@ -71,16 +59,17 @@ Failboat.Views.BoardShow = Failboat.CompositeView.extend({
 
   createTask: function(event) {
     event.preventDefault();
+    var self = this;
     var board_id = this.model.get('id');
-    var newTask = new Failboat.Models.Task({
+    this.model.tasks.create({
       name: $('#new_task_name').val(), 
       done: false,
       board_id: board_id
-    });
-    newTask.save({}, {
+    },{
       wait: true,
       success: function() {
         $('#new_task')[0].reset();
+        self.model.trigger('change');
       },
       error: function() {
         alert('error');

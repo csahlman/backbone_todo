@@ -1,4 +1,4 @@
-Failboat.Views.Board = Failboat.CompositeView.extend({
+Failboat.Views.Board = Support.CompositeView.extend({
   tagName: 'li',
 
   template: JST['boards/show'],
@@ -18,10 +18,6 @@ Failboat.Views.Board = Failboat.CompositeView.extend({
     return this;
   },
 
-  leave: function() {
-    this.off();
-    this.remove();
-  },
 
   deleteBoard: function(event) {
     event.preventDefault();

@@ -1,4 +1,4 @@
-Failboat.Models.Comment = Backbone.RelationalModel.extend({
+Failboat.Models.Comment = Backbone.Model.extend({
   urlRoot: '/comments'
 
 });

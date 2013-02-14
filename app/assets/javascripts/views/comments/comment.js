@@ -1,4 +1,4 @@
-Failboat.Views.Comment = Failboat.CompositeView.extend({
+Failboat.Views.Comment = Support.CompositeView.extend({
   tagName: 'li',
 
   template: JST['comments/show'],
@@ -8,7 +8,7 @@ Failboat.Views.Comment = Failboat.CompositeView.extend({
   },
 
   initialize: function() {
-    this.model.on('change', this.render, this);
+    // this.model.on('change', this.render, this);
     this.model.on('destroy', this.remove, this);
   },
 
@@ -20,12 +20,7 @@ Failboat.Views.Comment = Failboat.CompositeView.extend({
     }));
     return this;
   },
-
-  leave: function() {
-    this.off();
-    this.remove();
-  },
-
+  
   destroyComment: function(event) {
     event.preventDefault();
     var confirmation = confirm("Are you sure?");

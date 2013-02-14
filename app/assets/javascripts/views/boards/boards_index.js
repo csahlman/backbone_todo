@@ -1,4 +1,4 @@
-Failboat.Views.BoardsIndex = Failboat.CompositeView.extend({
+Failboat.Views.BoardsIndex = Support.CompositeView.extend({
   tagName: 'span',
 
   id: "main",
@@ -10,7 +10,7 @@ Failboat.Views.BoardsIndex = Failboat.CompositeView.extend({
   },
 
   initialize: function() {
-    _.bindAll(this, "render");
+    _.bindAll(this, 'render', 'renderBoards', 'addOne');
     this.model.on('change', this.render, this);
     this.collection.on('reset', this.render, this);
     this.collection.on('change', this.render, this);
@@ -40,16 +40,14 @@ Failboat.Views.BoardsIndex = Failboat.CompositeView.extend({
   },
 
   addOne: function(board) {
-    // console.log('adding a board item');
     var boardView = new Failboat.Views.Board({model: board});
-    this.$('#boards').append(boardView.render().el);
-    console.log(this.renderChild);
+    // this.$('#boards').append(boardView.render().el);
     //     var boardView = new Failboat.Views.Board({model: board});
-    // var boardContainer = this.$('#boards');
-    // this.renderChildInto(boardView, boardContainer);
+    var boardContainer = this.$('#boards');
+    this.appendChildTo(boardView, boardContainer);
   },
 
-  createBoard: function(event) {
+  createBoard: function() {
     event.preventDefault();
     this.collection.create({
       name: $('#new_board_name').val()

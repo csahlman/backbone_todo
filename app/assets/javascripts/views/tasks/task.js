@@ -1,4 +1,4 @@
-Failboat.Views.Task = Failboat.CompositeView.extend({
+Failboat.Views.Task = Support.CompositeView.extend({
   tagName: 'li', 
 
   template: JST['tasks/task'],
@@ -13,29 +13,36 @@ Failboat.Views.Task = Failboat.CompositeView.extend({
   initialize: function() {
     this.listenTo(this.model, 'destroy', this.remove);
     // this.model.on('reset', this.render, this);
-    this.model.on('change:done', this.addToCorrectList, this);
+    // this.model.on('change:done', this.addToCorrectList, this);
     this.model.on('reset', this.remove, this);
+    // this.model.on('change', this.render, this);
+    this.model.on('change:done', this.addToCorrectList, this);
     // this.model.on('change:name', this.render, this);
     // this.model.on('change:id', this.render, this);
     // this.model.on('change:description', this.render, this);
   },
 
   render: function() {
-    var board_id = this.model.get('board_id').get('id'),
+    var board_id = this.model.get('board_id'),
         id = this.model.id,
         name = this.model.escape('name'),
-        description = this.model.escape('description');
+        description = this.model.escape('description'),
+        finished = this.model.get('done');
 
     this.$el.html(this.template({
       board_id: board_id,
       id: id,
       name: name,
-      description: description
+      description: description,
+      finished: finished
     }));
-    this.addToCorrectList();
     return this;
   },
 
+  leave: function() {
+    this.remove();
+    this.off();
+  },
 
   toggleDone: function(event) {
     event.preventDefault();
@@ -44,7 +51,6 @@ Failboat.Views.Task = Failboat.CompositeView.extend({
 
 
   addToCorrectList: function() {
-    console.log('adding to correct list');
     $li = this.$el;
     if(this.model.isFinished()) {
       $li.appendTo('#finished');

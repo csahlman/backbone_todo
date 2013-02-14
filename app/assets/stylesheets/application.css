@@ -16,7 +16,3 @@
  *= require unicorn.blue
  *= require custom
  */
-
-.finished {
-  text-decoration: line-through;
-}

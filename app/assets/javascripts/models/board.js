@@ -1,17 +1,15 @@
-Failboat.Models.Board = Backbone.RelationalModel.extend({
+Failboat.Models.Board = Backbone.Model.extend({
   urlRoot: '/boards',
 
-  relations: [{
-    type: Backbone.HasMany,
-    key: 'tasks',
-    relatedModel: 'Failboat.Models.Task',
-    collectionType: 'Failboat.Collections.Tasks',
-    includeInJSON: false,
-    reverseRelation: {
-      key: "board_id",
-      includeInJSON: 'id'
-    } 
-  }]
+  initialize: function() {
+    this.on("change:tasks", this.parseTasks);
+    this.parseTasks();
+  },
+
+  parseTasks: function() {
+    this.tasks = new Failboat.Collections.Tasks(this.get('tasks'));
+    console.log('parseTasks');
+  }
 
 
 });

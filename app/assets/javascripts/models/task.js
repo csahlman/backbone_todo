@@ -1,23 +1,10 @@
-Failboat.Models.Task = Backbone.RelationalModel.extend({
+Failboat.Models.Task = Backbone.Model.extend({
   urlRoot: '/tasks',
 
   defaults: {
     name: "default", 
     done: "false"
   },
-
-  relations: [{
-    type: Backbone.HasMany,
-    key: 'comments',
-    relatedModel: 'Failboat.Models.Comment',
-    collectionType: 'Failboat.Collections.Comments',
-    includeInJSON: false,
-    reverseRelation: {
-      key: "task_id",
-      includeInJSON: 'id'
-    } 
-  }],
-
 
   validate: function(attributes) {
     // attributes hash only contains changed attributes, so extend it to include current ones as well
@@ -28,7 +15,13 @@ Failboat.Models.Task = Backbone.RelationalModel.extend({
   },
 
   initialize: function() {
-    
+    this.on('change:comments', this.parseComments);
+    this.parseComments();
+  },
+
+  parseComments: function() {
+    this.comments = new Failboat.Collections.Comments(this.get('comments'));
+    // console.log('parseComments');
   },
 
   toggle: function() {

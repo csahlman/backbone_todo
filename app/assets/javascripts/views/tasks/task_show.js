@@ -1,4 +1,4 @@
-Failboat.Views.TaskShow = Failboat.CompositeView.extend({
+Failboat.Views.TaskShow = Support.CompositeView.extend({
   tagName: 'span',
 
   id: 'task_show',
@@ -18,23 +18,26 @@ Failboat.Views.TaskShow = Failboat.CompositeView.extend({
   },
 
   initialize: function() {
-    this.model.fetchRelated();
+    _.bindAll(this, 'render', 'renderComment', 'createComment');
+    this.model.on('change:comments', this.renderComment, this);
     this.model.on('destroy', this.remove, this);
     this.model.on('change:description', this.render, this);
     this.model.on('change:name', this.render, this);
     this.model.on('change:done', this.render, this);
     this.model.on('reset', this.render, this);
-    this.model.on('add:comments', this.renderComment, this);
+    this.model.on('change', this.render, this);
+    // this.model.on('add:comments', this.renderComment, this);
   },
 
   render: function() {
-    var comments = this.model.get('comments');
-    var board = this.model.get('board_id').id;
+    this._leaveChildren();
+    var comments = this.model.comments;
+    var board_id = this.model.get('board_id')
     this.$el.html(this.template({
       name: this.model.escape('name'),
       description: this.model.escape('description'),
       done: this.model.get('done'),
-      board: board
+      board_id: board_id
     }));
     if(comments.length > 0 && (this.$('#comments').html().trim() === '')) {
       this.addAll(comments);
@@ -45,12 +48,15 @@ Failboat.Views.TaskShow = Failboat.CompositeView.extend({
   },
 
   addAll: function(comments) {
+    console.log('add all');
     comments.each(this.renderComment);
   },  
 
   renderComment: function(comment) {
+    console.log('rendering comment');
     var commentView = new Failboat.Views.Comment({model: comment});
-    $('#comments').prepend(commentView.render().el);
+    var container = this.$('#comments');
+    this.prependChildTo(commentView, container);
   },
 
   renderForm: function(event) {
@@ -105,14 +111,17 @@ Failboat.Views.TaskShow = Failboat.CompositeView.extend({
   },
 
   createComment: function(event) {
-    console.log('creating comment');
     event.preventDefault();
     var content = $('#new_comment').val();
-    var comment = new Failboat.Models.Comment({task_id: this.model.get('id'), content: content});
-    comment.save({}, {
+    var self = this;
+    this.model.comments.create({
+      task_id: this.model.get('id'), 
+      content: content
+    },{
       wait: true,
       success: function() {
         $('#new_comment').val('');
+        self.model.trigger('change');
       },
       error: function() {
         console.log('error creating comment');
