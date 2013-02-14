@@ -1,4 +1,4 @@
-Failboat.Views.TaskShow = Backbone.View.extend({
+Failboat.Views.TaskShow = Failboat.CompositeView.extend({
   tagName: 'span',
 
   id: 'task_show',

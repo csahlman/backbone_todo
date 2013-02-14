@@ -1,6 +1,12 @@
 <div id="content-header">
   <h1 id="page_header">
-    <span id="name"><%= name %></span> 
+    <span id="name"><%= name %> 
+      <% if(done) { %>
+        (Marked As Finished)
+      <% } else { %>
+        (Not done)
+      <% } %>
+    </span> 
     <a href="#" class="btn btn-success" id="edit_name_button">Edit Name</a>
     <a href="#" class="btn btn-info" id="edit_users">Edit Users</a>
     <a href="#" class="btn btn-danger" id="delete_board">Delete Task</a>
@@ -24,11 +30,6 @@
             </div> <!-- widget-title -->
             <div class="widget-content">
               <h3><%= name %></h3>
-              <% if(done) { %>
-                <a href='#' id="toggle" class="btn btn-small btn-info">Mark As Unfinished</a>
-              <% } else { %>
-                <a href='#' id="toggle" class="btn btn-small btn-danger">Mark As Finished</a>
-              <% } %>
               <br><br>
               <p id="description"><%= description %></p>
               <a href="#" class="edit">Edit Description</a>
@@ -45,6 +46,11 @@
               <h5>Task information</h5>
             </div> <!-- widget-title -->
             <div class="widget-content nopadding">
+              <% if(done) { %>
+                <a href='#' id="toggle" class="btn btn-danger">Mark As Unfinished</a>
+              <% } else { %>
+                <a href='#' id="toggle" class="btn btn-danger">Mark As Finished</a>
+              <% } %>
               <h3>Comments</h3>
               <ul class="recent-comments" id="comments">
                     

@@ -8,8 +8,12 @@
   font-style: italic;
 }
 
-.delete_button {
+.delete_button, .toggle, .right {
   float: right;
+}
+
+.toggle {
+  margin-right: 3px;
 }
 
 // .widget-box {

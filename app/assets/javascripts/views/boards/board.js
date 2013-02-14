@@ -1,4 +1,4 @@
-Failboat.Views.Board = Backbone.View.extend({
+Failboat.Views.Board = Failboat.CompositeView.extend({
   tagName: 'li',
 
   template: JST['boards/show'],
@@ -16,6 +16,11 @@ Failboat.Views.Board = Backbone.View.extend({
   render: function() {
     this.$el.html(this.template({board: this.model}));
     return this;
+  },
+
+  leave: function() {
+    this.off();
+    this.remove();
   },
 
   deleteBoard: function(event) {

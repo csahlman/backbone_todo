@@ -1,4 +1,4 @@
-Failboat.Views.BoardShow = Backbone.View.extend({
+Failboat.Views.BoardShow = Failboat.CompositeView.extend({
   tagName: 'span',
 
   id: 'board_show',
@@ -14,32 +14,36 @@ Failboat.Views.BoardShow = Backbone.View.extend({
   },
 
   initialize: function() {
-    this.model.fetch();
     this.model.on('reset', this.render, this);
+    this.model.on('change', this.render, this);
     this.model.on('change:name', this.render, this);
     this.model.on('add:tasks', this.addOne, this);
-    this.model.on('change:tasks:done', this.addAll, this);
+    // this.model.on('reset:tasks', this.addAll, this);
     // this.model.on('change:tasks:name', this.render, this);
     // this.model.on('change:name', this.render, this);       
     this.model.on('destroy', this.remove, this);
   },
 
   render: function() {
-    // if(this.model.get('tasks').length > 0 &&)
     var name = this.model.escape('name');
     var tasks = this.model.get('tasks');
     this.$el.html(this.template({
       name: this.model.escape('name')
     }));
-    if(tasks.length > 0 && (this.$('#finished').html().trim() === '') && (this.$('#tasks').html().trim() === '')) {
-      this.addAll(tasks);
-      // if we rerender and it doesn't change the add:tasks, manually readd them
-    }
-    // tasks.each(this.addOne);
+    // if(tasks.length > 0 && (this.$('#finished').html().trim() === '') && (this.$('#tasks').html().trim() === '')) {
+    //   this.addAll();
+    //   // if we rerender and it doesn't change the add:tasks, manually readd them
+    // }
     return this;
   },
 
-  addAll: function(tasks) {
+  leave: function() {
+    this.off();
+    this.remove();
+  },
+
+  addAll: function() {
+    var tasks = this.model.get('tasks');
     console.log('hitting addAll');
     tasks.each(this.addOne);
   },
@@ -52,6 +56,7 @@ Failboat.Views.BoardShow = Backbone.View.extend({
     } else {
       this.$('#tasks').append(taskListItemView.render().el);
     }
+    taskListItemView.unbind();
   },
 
   recreateTaskListItem: function(task) {

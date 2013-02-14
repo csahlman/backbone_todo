@@ -10,6 +10,10 @@ class CommentsController < ApplicationController
     respond_with @comment
   end
 
+  def destroy
+    respond_with Comment.find(params[:id]).destroy
+  end
+
   private
 
     def authenticate_user

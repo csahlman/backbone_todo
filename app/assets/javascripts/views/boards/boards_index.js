@@ -1,4 +1,4 @@
-Failboat.Views.BoardsIndex = Backbone.View.extend({
+Failboat.Views.BoardsIndex = Failboat.CompositeView.extend({
   tagName: 'span',
 
   id: "main",
@@ -10,11 +10,11 @@ Failboat.Views.BoardsIndex = Backbone.View.extend({
   },
 
   initialize: function() {
-    console.log('initialize boards index');
     this.model.on('change', this.render, this);
     this.collection.on('reset', this.render, this);
-    // this.collection.on('change', this.render, this);
+    this.collection.on('change', this.render, this);
     this.collection.on('add', this.addOne, this);
+    this.collection.on('remove', this.render, this);
     // this.collection.on('remove', this.remove, this);
     this.model.on('change', this.render, this);
   },
@@ -25,10 +25,14 @@ Failboat.Views.BoardsIndex = Backbone.View.extend({
         email: Failboat.currentUser.get('email'),
         length: this.collection.length 
       }));
-      
     }
     this.collection.each(this.addOne);
     return this;
+  },
+
+  leave: function() {
+    this.off();
+    this.remove();
   },
 
   addOne: function(board) {

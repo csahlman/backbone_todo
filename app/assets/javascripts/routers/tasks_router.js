@@ -1,4 +1,4 @@
-Failboat.Routers.Tasks = Backbone.Router.extend({
+Failboat.Routers.Tasks = Failboat.SwappingRouter.extend({
 
   routes: {
     "": "index",
@@ -53,10 +53,11 @@ Failboat.Routers.Tasks = Backbone.Router.extend({
     }
     var self = this;
     if(this.board && this.board.get('id') == id && this.boardShowView) {
-      this.board.fetch();
       this.boardShowView.delegateEvents();
       // seems necessary to delegateEvents if we're recyling a view, otherwise event handlers are not held
       $('#content').html(this.boardShowView.render().el);
+      this.board.fetch();
+      // this.board.trigger('reset');
     } else {
       this.board = this.boardsCollection.get(id);
       if(this.boardShowView && this.boardShowView.model.get('id') == id) {
@@ -69,6 +70,7 @@ Failboat.Routers.Tasks = Backbone.Router.extend({
         });
         $('#content').html(this.boardShowView.render().el);
       }
+      this.board.fetch();
     }
   },
 
@@ -87,14 +89,11 @@ Failboat.Routers.Tasks = Backbone.Router.extend({
       this.board.fetch({
         success: function() {
           var tasks = self.board.get('tasks')
-          console.log(self.board);
           tasks.each(function(task) {
             if(task.get('id') == id) {
-              console.log(task);
               self.task = task;
             }
           });
-          console.log(self.task);
           self.task.fetch();
           self.taskView = new Failboat.Views.TaskShow({model: self.task});
           $('#content').html(self.taskView.render().el);   
