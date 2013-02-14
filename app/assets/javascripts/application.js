@@ -18,8 +18,8 @@
 //= require backbone
 //= require backbone-relational
 //= require failboat
-//= require_tree ../templates
 //= require_tree ./support
+//= require_tree ../templates
 //= require_tree ./models
 //= require_tree ./collections
 //= require_tree ./views

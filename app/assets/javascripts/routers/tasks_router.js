@@ -11,18 +11,21 @@ Failboat.Routers.Tasks = Failboat.SwappingRouter.extend({
 
   initialize: function(options) {
     console.log('app initiated');
+    this.el = $('#content');
     this.boardsCollection = options.boards;
     this.users = options.users;
   },
 
   signIn: function() {
-    var view = new Failboat.Views.Signup({});
+    var signInView = new Failboat.Views.Signup({});
     $('#content').html(view.render().el);
+    this.swap(signInView);
   },
 
   logIn: function() {
     var loginView = new Failboat.Views.Login({});
-    $('#content').html(loginView.render().el);
+    this.swap(loginView);
+    // .html(loginView.render().el);
   },
 
   signOut: function() {
@@ -34,15 +37,11 @@ Failboat.Routers.Tasks = Failboat.SwappingRouter.extend({
       this.navigate('sign_in', true);
       return false;
     }
-    if(this.boardView) {
-      this.boardView.delegateEvents();
-    } else {
-      this.boardView = new Failboat.Views.BoardsIndex({
-        model: Failboat.currentUser, 
-        collection: this.boardsCollection
-      });
-    }
-    $('#content').html(this.boardView.render().el);
+    var boardView = new Failboat.Views.BoardsIndex({
+      model: Failboat.currentUser, 
+      collection: this.boardsCollection
+    });
+    this.swap(boardView);
     this.boardsCollection.trigger('reset');
   },
 
@@ -52,26 +51,13 @@ Failboat.Routers.Tasks = Failboat.SwappingRouter.extend({
       return false;
     }
     var self = this;
-    if(this.board && this.board.get('id') == id && this.boardShowView) {
-      this.boardShowView.delegateEvents();
-      // seems necessary to delegateEvents if we're recyling a view, otherwise event handlers are not held
-      $('#content').html(this.boardShowView.render().el);
-      this.board.fetch();
-      // this.board.trigger('reset');
-    } else {
-      this.board = this.boardsCollection.get(id);
-      if(this.boardShowView && this.boardShowView.model.get('id') == id) {
-        this.boardShowView.delegateEvents();
-        $('#content').html(this.boardShowView.render().el);
-      } else {
-        this.boardShowView = new Failboat.Views.BoardShow({
-          model: this.board,
-          board: id
-        });
-        $('#content').html(this.boardShowView.render().el);
-      }
-      this.board.fetch();
-    }
+    this.board = this.boardsCollection.get(id);
+    var boardShowView = new Failboat.Views.BoardShow({
+      model: this.board,
+      board: id
+    });
+    this.swap(boardShowView);
+    this.board.fetch();
   },
 
   showTask: function(boardId, id) {
@@ -80,25 +66,19 @@ Failboat.Routers.Tasks = Failboat.SwappingRouter.extend({
       return false;
     }
     var self = this;
-    if(this.taskView && this.taskView.model.get('id') == id) {
-      this.taskView.delegateEvents();
-      this.task.fetch();
-      $('#content').html(this.taskView.render().el);   
-    } else {
-      if(!this.board) this.board = this.boardsCollection.get(boardId);
-      this.board.fetch({
-        success: function() {
-          var tasks = self.board.get('tasks')
-          tasks.each(function(task) {
-            if(task.get('id') == id) {
-              self.task = task;
-            }
-          });
-          self.task.fetch();
-          self.taskView = new Failboat.Views.TaskShow({model: self.task});
-          $('#content').html(self.taskView.render().el);   
-        }
-      });
-    }
+    this.board = this.boardsCollection.get(boardId);
+    this.board.fetch({
+      success: function() {
+        var tasks = self.board.get('tasks')
+        tasks.each(function(task) {
+          if(task.get('id') == id) {
+            self.task = task;
+          }
+        });
+        var taskView = new Failboat.Views.TaskShow({model: self.task});
+        self.swap(taskView);
+        self.task.fetch();
+      }
+    });
   }
 });
