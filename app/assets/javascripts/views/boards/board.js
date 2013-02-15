@@ -7,6 +7,11 @@ Failboat.Views.Board = Backbone.Marionette.ItemView.extend({
     'click .delete_button': 'deleteBoard'
   },
 
+  onClose: function(){
+    // custom closing and cleanup goes here
+    console.log('close triggered');
+  },
+
   initialize: function() {
     this.model.on('change', this.render, this);
     this.model.on('reset', this.render, this);
@@ -16,6 +21,11 @@ Failboat.Views.Board = Backbone.Marionette.ItemView.extend({
   render: function() {
     this.$el.html(this.template({board: this.model}));
     return this;
+  },
+
+  onClose: function(){
+    // custom closing and cleanup goes here
+    console.log('close triggered');
   },
 
 

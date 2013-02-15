@@ -1,6 +1,6 @@
 <div id="content-header">
   <h1 id="page_header">
-    <span id="name"><%= name %> 
+      <span id="name"><%= name %>
       <% if(done) { %>
         (Marked As Finished)
       <% } else { %>
@@ -30,7 +30,7 @@
             </div> <!-- widget-title -->
             <div class="widget-content">
               <h3><%= name %></h3>
-              <br><br>
+              <br>
               <p id="description"><%= description %></p>
               <a href="#" class="edit">Edit Description</a>
               <form id="add_comment">
@@ -52,7 +52,8 @@
                 <a href='#' id="toggle" class="btn btn-danger">Mark As Finished</a>
               <% } %>
               <h3 id="comment">Comments</h3>
-
+              <ul class="recent-comments" id="comments">
+              </ul>
             </div> <!-- widget-content -->
           </div> <!-- widget-box -->
         </div> <!-- span6 -->

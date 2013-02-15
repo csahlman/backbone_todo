@@ -1,11 +1,12 @@
-Failboat.Views.TaskShow = Backbone.Marionette.ItemView.extend({
-  tagName: 'span',
-
-  id: 'task_show',
+Failboat.Views.TaskShow = Backbone.Marionette.Layout.extend({
 
   template: JST['tasks/show_task'],
 
-  model: Failboat.Models.Task,
+  // model: Failboat.Models.Task,
+
+  regions: {
+    comments: '#comments'
+  },
 
   events: {
     'click #edit_name_button': 'renderNameForm',
@@ -19,34 +20,44 @@ Failboat.Views.TaskShow = Backbone.Marionette.ItemView.extend({
 
   initialize: function() {
     _.bindAll(this, 'render', 'renderComment', 'createComment');
-    this.model.on('change:comments', this.renderComment, this);
+    // this.model.on('change:comments', this.renderComment, this);
     this.model.on('destroy', this.remove, this);
-    this.model.on('change:description', this.render, this);
-    this.model.on('change:name', this.render, this);
-    this.model.on('change:done', this.render, this);
-    this.model.on('reset', this.render, this);
-    this.model.on('change', this.render, this);
+    this.model.on('change:description', this.renderDescription, this);
+    this.model.on('change:name', this.renderName, this);
+    this.model.on('change:done', this.render, this)
+    // this.model.on('change:done', this.render, this);
+    // this.model.on('reset', this.render, this);
+    // this.model.on('change', this.render, this);
     // this.model.on('add:comments', this.renderComment, this);
   },
 
   render: function() {
+    console.log('render task show');
     var board_id = this.model.get('board_id')
     this.$el.html(this.template({
       name: this.model.escape('name'),
       description: this.model.escape('description'),
       done: this.model.get('done'),
       board_id: board_id
-    }));
-    // if(comments.length > 0 && (this.$('#comments').html().trim() === '')) {
-    //   this.addAll(comments);
-    //   // once again, if we render the whole page, it won't trigger an add:comments event
-    //   // so need to manually readd the comments after we fill the el
-    // }
-    var commentsCollectionView = new Failboat.Views.CommentCollectionView({
-      collection: this.model.comments
-    });
-    this.$('#comment').after(commentsCollectionView.render().el);    
+    })); 
     return this;
+  },
+
+  renderDescription: function(task) {
+    $('#description').html(task.escape('description'));
+  },
+
+  renderName: function(task) {
+    var name = task.escape('name'),
+        parsedName;
+    $('#task_div h5').html(name);
+    $('.widget-content h3').html(name);
+    if(task.get('done')) {
+      $('#name').html(name + ' (Marked As Finished)');
+    } else {
+      $('#name').html(name + ' (Not Done)');
+    }
+    
   },
 
   addAll: function(comments) {
@@ -96,7 +107,7 @@ Failboat.Views.TaskShow = Backbone.Marionette.ItemView.extend({
     event.preventDefault();
     var name = $('#edit_task_name').val().trim();
     if(name === this.model.get('name')) {
-      this.model.trigger('change:name');
+      this.renderName(this.model);
     }
     else {
       this.model.save({name: name}, {

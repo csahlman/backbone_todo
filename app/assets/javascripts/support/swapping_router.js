@@ -5,8 +5,8 @@ Failboat.SwappingRouter = function(options) {
 
 _.extend(Failboat.SwappingRouter.prototype, Backbone.Router.prototype, {
   swap: function(newView) {
-    if (this.currentView && this.currentView.leave) {
-      this.currentView.leave();
+    if (this.currentView && this.currentView.close) {
+      this.currentView.close();
     }
     this.currentView = newView;
     $(this.el).empty().append(this.currentView.render().el);

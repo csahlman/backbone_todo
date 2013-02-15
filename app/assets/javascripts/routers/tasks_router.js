@@ -1,4 +1,4 @@
-Failboat.Routers.Tasks = Support.SwappingRouter.extend({
+Failboat.Routers.Tasks = Failboat.SwappingRouter.extend({
 
   routes: {
     "": "index",
@@ -42,7 +42,6 @@ Failboat.Routers.Tasks = Support.SwappingRouter.extend({
       collection: this.boardsCollection
     });
     this.swap(boardView);
-    // this.boardsCollection.trigger('reset');
   },
 
   showBoard: function(id) {
@@ -50,12 +49,20 @@ Failboat.Routers.Tasks = Support.SwappingRouter.extend({
       this.navigate('sign_in', true);
       return false;
     }
+    var self = this;
     this.board = this.boardsCollection.get(id);
     var boardShowView = new Failboat.Views.BoardShow({
       model: this.board
     });
-    this.swap(boardShowView);
-    this.board.fetch();
+    this.board.fetch({
+      success: function() {
+        var tasksCollectionView = new Failboat.Views.TasksIndex({
+          collection: self.board.tasks
+        });
+        self.swap(boardShowView);
+        boardShowView.list.show(tasksCollectionView);
+      }
+    });
   },
 
   showTask: function(boardId, id) {
@@ -74,8 +81,15 @@ Failboat.Routers.Tasks = Support.SwappingRouter.extend({
           }
         });
         var taskView = new Failboat.Views.TaskShow({model: self.task});
-        self.swap(taskView);
-        self.task.fetch();
+        self.task.fetch({
+          success: function() {
+            var commentsCollectionView = new Failboat.Views.CommentCollectionView({
+              collection: self.task.comments
+            });
+            self.swap(taskView);
+            taskView.comments.show(commentsCollectionView);
+          }
+        });
       }
     });
   }

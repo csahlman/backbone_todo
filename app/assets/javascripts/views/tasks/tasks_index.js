@@ -1,7 +1,4 @@
 Failboat.Views.TasksIndex = Backbone.Marionette.CollectionView.extend({
-  tagName: 'span',
-
-  id: 'fail',
 
   itemView: Failboat.Views.Task,
 
@@ -16,7 +13,8 @@ Failboat.Views.TasksIndex = Backbone.Marionette.CollectionView.extend({
   initialize: function() {
     _.bindAll(this, 'render', 'addToCorrectList', 'addOne');
     // this.listenTo(this.collection, 'add', this.addOne);
-    this.listenTo(this.collection, 'change', this.render);
+    this.listenTo(this.collection, 'add', this.addOne);
+    this.listenTo(this.collection)
   },
 
   render: function() {

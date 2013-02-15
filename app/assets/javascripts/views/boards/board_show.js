@@ -1,9 +1,10 @@
-Failboat.Views.BoardShow = Backbone.Marionette.ItemView.extend({
-  tagName: 'span',
-
-  id: 'board_show',
+Failboat.Views.BoardShow = Backbone.Marionette.Layout.extend({
 
   template: JST['boards/show_board'],
+
+  regions: {
+    list: '#list'
+  },
 
   events: {
     'submit #new_task': 'createTask',
@@ -15,8 +16,9 @@ Failboat.Views.BoardShow = Backbone.Marionette.ItemView.extend({
 
   initialize: function() {
     _.bindAll(this, 'render', 'createTask');
-    this.model.on('change:tasks', this.renderTasks, this);
-    this.model.on('change:name', this.render, this);   
+    // this.model.on('reset', this.render, this);
+    // this.model.on('change', this.render, this);
+    // this.model.on('change:name', this.render, this);   
     this.model.on('destroy', this.remove, this);
   },
 
@@ -26,17 +28,30 @@ Failboat.Views.BoardShow = Backbone.Marionette.ItemView.extend({
     this.$el.html(this.template({
       name: this.model.escape('name')
     }));
-    if(this.model.tasks.length > 0) {
-      this.renderTasks();
-    }
     return this;
   },
 
-  renderTasks: function() {
-    var taskCollectionView = new Failboat.Views.TasksIndex({
-      collection: this.model.tasks
-    });
-    this.$('#list').after(taskCollectionView.render().el);
+
+  addOne: function(task) {
+    // console.log('in addOne');
+    // var taskListItem = new Failboat.Views.Task({model: task});
+    // if(task.isFinished()) {
+    //   this.finished.show(taskListItem.render().el);
+    // } else {
+    //   $(this.tasks).append(taskListItem.render().el);
+    // }
+  },
+
+  addToCorrectList: function(li, task) {
+    if(task.isFinished()) {
+      this.$('#finished').append($(li));
+      $(li).addClass('finished');
+      // this.$('.toggle').text("Mark As Unfinished");
+    } else {
+      this.$('#tasks').append($(li));
+      $(li).removeClass('finished');
+      // this.$('.toggle').text("Mark As Finished");
+    }
   },
 
   deleteBoard: function(event) {

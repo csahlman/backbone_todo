@@ -1,13 +1,9 @@
 Failboat.Views.CommentCollectionView = Backbone.Marionette.ItemView.extend({
-  tagName: 'ul',
-
-  className: 'recent-comments',
-
-  id: "comments",
 
   itemView: Failboat.Views.Comment,
 
   events: {
+    // 'click .delete_button': 'destroyComment'
   },
 
   initialize: function() {
