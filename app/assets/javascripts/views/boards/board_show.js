@@ -43,15 +43,15 @@ Failboat.Views.BoardShow = Backbone.Marionette.Layout.extend({
   },
 
   addToCorrectList: function(li, task) {
-    if(task.isFinished()) {
-      this.$('#finished').append($(li));
-      $(li).addClass('finished');
-      // this.$('.toggle').text("Mark As Unfinished");
-    } else {
-      this.$('#tasks').append($(li));
-      $(li).removeClass('finished');
-      // this.$('.toggle').text("Mark As Finished");
-    }
+    // if(task.isFinished()) {
+    //   this.$('#finished').append($(li));
+    //   $(li).addClass('finished');
+    //   // this.$('.toggle').text("Mark As Unfinished");
+    // } else {
+    //   this.$('#tasks').append($(li));
+    //   $(li).removeClass('finished');
+    //   // this.$('.toggle').text("Mark As Finished");
+    // }
   },
 
   deleteBoard: function(event) {

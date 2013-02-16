@@ -14,15 +14,16 @@ Failboat.Views.Task = Backbone.Marionette.ItemView.extend({
     this.listenTo(this.model, 'destroy', this.remove);
     // this.model.on('reset', this.render, this);
     // this.model.on('change:done', this.addToCorrectList, this);
-    this.model.on('reset', this.remove, this);
+    // this.model.on('reset', this.remove, this);
     // this.model.on('change', this.render, this);
-    this.model.on('change:done', this.addToCorrectList, this);
+    this.model.on('change:done', this.render, this);
     // this.model.on('change:name', this.render, this);
     // this.model.on('change:id', this.render, this);
     // this.model.on('change:description', this.render, this);
   },
 
   render: function() {
+    console.log('in task.js render');
     var board_id = this.model.get('board_id'),
         id = this.model.id,
         name = this.model.escape('name'),
@@ -36,6 +37,7 @@ Failboat.Views.Task = Backbone.Marionette.ItemView.extend({
       description: description,
       finished: finished
     }));
+    this.addToCorrectList();
     return this;
   },
 
@@ -46,6 +48,7 @@ Failboat.Views.Task = Backbone.Marionette.ItemView.extend({
 
 
   addToCorrectList: function() {
+    console.log('add to correct list in task.js');
     $li = this.$el;
     if(this.model.isFinished()) {
       $li.appendTo('#finished');
