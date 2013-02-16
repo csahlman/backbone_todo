@@ -20,19 +20,13 @@ Failboat.Views.TaskShow = Backbone.Marionette.Layout.extend({
 
   initialize: function() {
     _.bindAll(this, 'render', 'renderComment', 'createComment');
-    // this.model.on('change:comments', this.renderComment, this);
     this.model.on('destroy', this.remove, this);
     this.model.on('change:description', this.renderDescription, this);
     this.model.on('change:name', this.renderName, this);
-    this.model.on('change:done', this.render, this)
-    // this.model.on('change:done', this.render, this);
-    // this.model.on('reset', this.render, this);
-    // this.model.on('change', this.render, this);
-    // this.model.on('add:comments', this.renderComment, this);
+    this.model.on('change:done', this.renderDone, this)
   },
 
   render: function() {
-    console.log('render task show');
     var board_id = this.model.get('board_id')
     this.$el.html(this.template({
       name: this.model.escape('name'),
@@ -48,8 +42,7 @@ Failboat.Views.TaskShow = Backbone.Marionette.Layout.extend({
   },
 
   renderName: function(task) {
-    var name = task.escape('name'),
-        parsedName;
+    var name = task.escape('name');
     $('#task_div h5').html(name);
     $('.widget-content h3').html(name);
     if(task.get('done')) {
@@ -60,10 +53,17 @@ Failboat.Views.TaskShow = Backbone.Marionette.Layout.extend({
     
   },
 
-  addAll: function(comments) {
-    console.log('add all');
-    comments.each(this.renderComment);
-  },  
+  renderDone: function() {
+    var name = this.model.escape('name');
+    if(this.model.isFinished()) {
+      $('#toggle').html('Mark As Unfinished');
+      $('#name').html(name + ' (Marked As Finished)');
+    } else {
+      $('#toggle').html('Mark As Finished');
+      $('#name').html(name + ' (Not Done)');
+    }
+    
+  },
 
   renderComment: function(comment) {
     console.log('rendering comment');

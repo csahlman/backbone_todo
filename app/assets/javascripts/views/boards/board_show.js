@@ -23,7 +23,6 @@ Failboat.Views.BoardShow = Backbone.Marionette.Layout.extend({
   },
 
   render: function() {
-    console.log(this.model.tasks.toJSON());
     var name = this.model.escape('name');
     this.$el.html(this.template({
       name: this.model.escape('name')

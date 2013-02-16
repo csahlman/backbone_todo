@@ -1,9 +1,9 @@
 <a href="#" class="btn btn-small btn-danger delete_button">delete</a> 
 <% if(finished) { %>
-  <a href="#boards/<%= board_id %>/tasks/<%= id %>" class="link_list finished" data-toggle="tooltip" title="<%= description %>"><%= name %></a> 
+  <a href="#boards/<%= board_id %>/tasks/<%= id %>" class="link_list finished" id="link_text" data-toggle="tooltip" title="<%= description %>"><%= name %></a> 
   <a href="#" class="btn btn-small btn-info toggle">Mark As Unfinished</a>
 <% } else { %>
-  <a href="#boards/<%= board_id %>/tasks/<%= id %>" class="link_list" data-toggle="tooltip" title="<%= description %>"><%= name %></a>
+  <a href="#boards/<%= board_id %>/tasks/<%= id %>" class="link_list" id="link_text" data-toggle="tooltip" title="<%= description %>"><%= name %></a>
   <a href="#" class="btn btn-small btn-info toggle">Mark As Finished</a> 
 <% } %>
 

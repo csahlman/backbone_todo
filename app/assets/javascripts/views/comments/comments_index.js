@@ -1,4 +1,10 @@
-Failboat.Views.CommentCollectionView = Backbone.Marionette.ItemView.extend({
+Failboat.Views.CommentCollectionView = Backbone.Marionette.CollectionView.extend({
+
+  tagName: 'ul',
+
+  className: 'recent-comments',
+
+  id: 'comments',
 
   itemView: Failboat.Views.Comment,
 
@@ -6,18 +12,12 @@ Failboat.Views.CommentCollectionView = Backbone.Marionette.ItemView.extend({
     // 'click .delete_button': 'destroyComment'
   },
 
-  initialize: function() {
-
+  appendHtml: function(collectionView, itemView, index){
+    collectionView.$el.prepend(itemView.el);
   },
 
-  render: function() {
-    var self = this;
-    this.$el.html('');
-    this.collection.each(function(comment) {
-      var commentView = new Failboat.Views.Comment({model: comment});
-      self.$el.prepend(commentView.render().el);
-    });
-    return this;
+  initialize: function() {
+
   }
   
 });

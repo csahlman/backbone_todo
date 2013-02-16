@@ -1,9 +1,8 @@
-Failboat.Views.BoardsIndex = Backbone.Marionette.CollectionView.extend({
-  tagName: 'span',
-
-  id: "main",
+Failboat.Views.BoardsIndex = Backbone.Marionette.CompositeView.extend({
 
   itemView: Failboat.Views.Board,
+
+  itemViewContainer: "#boards",
 
   template: JST['boards/index'],
 
@@ -11,23 +10,23 @@ Failboat.Views.BoardsIndex = Backbone.Marionette.CollectionView.extend({
     'submit #new_board': 'createBoard'
   },
 
-  initialize: function() {
-    _.bindAll(this, 'render', 'renderBoards', 'addOne');
-    this.model.on('change', this.render, this);
-    // this.collection.on('reset', this.render, this);
-    this.collection.on('change', this.renderBoards, this);
-    this.collection.on('add', this.addOne, this);
-    this.collection.on('remove', this.render, this);
-    // this.collection.on('remove', this.remove, this);
-    this.model.on('change', this.render, this);
+  modelEvents: {
+    "change": "renderTemplate"
   },
 
-  render: function() {
-    console.log('rendering boards index');
-    this.renderTemplate();
-    this.renderBoards();
-    return this;
+  // collectionEvents: {
+
+  // },
+
+  initialize: function() {
+    _.bindAll(this, 'render', 'renderBoards', 'addOne');
+    // this.collection.on('reset', this.render, this);
+    // this.collection.on('change', this.renderBoards, this);
+    // this.collection.on('add', this.addOne, this);
+    // this.collection.on('remove', this.render, this);
+    // this.collection.on('remove', this.remove, this);
   },
+
 
   renderTemplate: function() {
     if(Failboat.currentUser && Failboat.currentUser.get('email')) {

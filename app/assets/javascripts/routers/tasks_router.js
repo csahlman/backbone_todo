@@ -37,11 +37,22 @@ Failboat.Routers.Tasks = Failboat.SwappingRouter.extend({
       this.navigate('sign_in', true);
       return false;
     }
+    var self = this;
     var boardView = new Failboat.Views.BoardsIndex({
       model: Failboat.currentUser, 
       collection: this.boardsCollection
     });
-    this.swap(boardView);
+    if(Failboat.currentUser.get('email')) {
+      this.swap(boardView);
+    } else {
+      Failboat.currentUser.fetch({
+        success: function() {
+          self.swap(boardView);
+        }
+      });
+    }
+      
+    // this.el.html(boardView.renderModel());
   },
 
   showBoard: function(id) {
