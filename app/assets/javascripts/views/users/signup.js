@@ -33,8 +33,8 @@ Failboat.Views.Signup = Backbone.View.extend({
         // el.find('input.btn-primary').button('reset');
         Failboat.session.save({remember_token: response.remember_token, id: response.id })
         Failboat.currentUser = new Failboat.Models.User(response);
+        Failboat.appRouter.boardsCollection.fetch();
         Failboat.appRouter.navigate('', true);
-        Failboat.appRouter.collection.trigger('change');
       },
       error: function(userSession, response) {
         console.log('error');

@@ -29,7 +29,6 @@ Failboat.Views.Login = Backbone.View.extend({
         Failboat.currentUser = new Failboat.Models.User(response);
         Failboat.appRouter.boardsCollection.fetch();
         Failboat.appRouter.navigate('', true);
-        if(Failboat.appRouter.collection) Failboat.appRouter.collection.trigger('reset');
       },
       error: function(userSession, response) {
         console.log('error');
