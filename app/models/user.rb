@@ -25,6 +25,10 @@ class User < ActiveRecord::Base
 
   has_many :comments
 
+  def is_board_admin?(board_id)
+    board_users.find_by_user_id(user_id).admin?
+  end
+
   private
     
     def create_remember_token

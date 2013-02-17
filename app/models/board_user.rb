@@ -11,7 +11,7 @@
 #
 
 class BoardUser < ActiveRecord::Base
-  attr_accessible :admin, :board_id, :user_id
+  # attr_accessible :admin, :board_id, :user_id
 
   belongs_to :user
   belongs_to :board

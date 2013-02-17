@@ -16,7 +16,11 @@ class Board < ActiveRecord::Base
 
   has_many :tasks, dependent: :destroy
 
+  accepts_nested_attributes_for :board_users
+
   def set_board_attributes(params)
     self.name = params[:name]
   end
+
+
 end

@@ -4,4 +4,5 @@ Failboat.Models.User = Backbone.Model.extend({
     // if(this.isNew()) return base;
     return base + '/' + this.get('remember_token');
   }
+
 });
