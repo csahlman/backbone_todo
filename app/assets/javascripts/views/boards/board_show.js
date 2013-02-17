@@ -17,10 +17,8 @@ Failboat.Views.BoardShow = Backbone.Marionette.Layout.extend({
 
   initialize: function() {
     _.bindAll(this, 'render', 'createTask');
-    // this.model.on('reset', this.render, this);
-    // this.model.on('change', this.render, this);
-    // this.model.on('change:name', this.render, this);   
     this.model.on('destroy', this.remove, this);
+    this.model.on('change:name', this.renderName, this);
   },
 
   render: function() {
@@ -29,29 +27,6 @@ Failboat.Views.BoardShow = Backbone.Marionette.Layout.extend({
       name: this.model.escape('name')
     }));
     return this;
-  },
-
-
-  addOne: function(task) {
-    // console.log('in addOne');
-    // var taskListItem = new Failboat.Views.Task({model: task});
-    // if(task.isFinished()) {
-    //   this.finished.show(taskListItem.render().el);
-    // } else {
-    //   $(this.tasks).append(taskListItem.render().el);
-    // }
-  },
-
-  addToCorrectList: function(li, task) {
-    // if(task.isFinished()) {
-    //   this.$('#finished').append($(li));
-    //   $(li).addClass('finished');
-    //   // this.$('.toggle').text("Mark As Unfinished");
-    // } else {
-    //   this.$('#tasks').append($(li));
-    //   $(li).removeClass('finished');
-    //   // this.$('.toggle').text("Mark As Finished");
-    // }
   },
 
   deleteBoard: function(event) {
@@ -72,7 +47,7 @@ Failboat.Views.BoardShow = Backbone.Marionette.Layout.extend({
       wait: true,
       success: function() {
         $('#new_task')[0].reset();
-        // self.model.trigger('change');
+        self.model.trigger('change:name');
       },
       error: function() {
         alert('error');
@@ -80,11 +55,15 @@ Failboat.Views.BoardShow = Backbone.Marionette.Layout.extend({
     });
   },
 
+  renderName: function() {
+    console.log('in renderName');
+    this.$('#board_name').html(this.model.escape('name'));
+  },
+
   editName: function(event) {
     event.preventDefault();
-    $('#name').replaceWith(JST['boards/name_form']({name: this.model.get('name')}));
+    this.$('#board_name').html(JST['boards/name_form']({name: this.model.get('name')}));
     $('#edit_board_name').focus();
-    $('#edit_name_button').remove();
   },
 
   updateName: function(event) {

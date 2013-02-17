@@ -44,11 +44,11 @@ Failboat.Views.TaskShow = Backbone.Marionette.Layout.extend({
   renderName: function(task) {
     var name = task.escape('name');
     $('#task_div h5').html(name);
-    $('.widget-content h3').html(name);
+    $('#task_name').html(name);
     if(task.get('done')) {
-      $('#name').html(name + ' (Marked As Finished)');
+      this.$('#name').html(name + ' (Marked As Finished)');
     } else {
-      $('#name').html(name + ' (Not Done)');
+      this.$('#name').html(name + ' (Not Done)');
     }
     
   },
