@@ -38,7 +38,7 @@ Failboat.Views.TaskShow = Backbone.Marionette.Layout.extend({
   },
 
   renderDescription: function(task) {
-    $('#description').html(task.escape('description'));
+    $('#description').html(this.model.escape('description'));
   },
 
   renderName: function(task) {

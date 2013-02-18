@@ -28,6 +28,9 @@ Failboat.Routers.Tasks = Failboat.SwappingRouter.extend({
 
   signOut: function() {
     Failboat.session.destroy();
+    var loginView = new Failboat.Views.Login({});
+    this.swap(loginView);
+    this.navigate('log_in', false);
   },
 
   index: function() {
@@ -49,8 +52,6 @@ Failboat.Routers.Tasks = Failboat.SwappingRouter.extend({
         }
       });
     }
-      
-    // this.el.html(boardView.renderModel());
   },
 
   showBoard: function(id) {
@@ -69,7 +70,8 @@ Failboat.Routers.Tasks = Failboat.SwappingRouter.extend({
           collection: self.board.tasks
         });
         var usersCollectionView = new Failboat.Views.UsersIndex({
-          collection: self.board.users
+          collection: self.board.users,
+          model: self.board
         });
         self.swap(boardShowView);
         boardShowView.list.show(tasksCollectionView);

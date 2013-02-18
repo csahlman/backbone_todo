@@ -4,7 +4,7 @@ Failboat.Views.BoardShow = Backbone.Marionette.Layout.extend({
 
   regions: {
     list: '#list',
-    users: '#users'
+    users: '#board_info'
   },
 
   events: {

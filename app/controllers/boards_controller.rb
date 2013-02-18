@@ -23,7 +23,7 @@ class BoardsController < ApplicationController
 
   def update
     @board = current_user.boards.find(params[:id])
-    @board.set_board_attributes(params[:board])
+    @board.set_board_attributes(params)
     @board.save!
     respond_with @board
   end

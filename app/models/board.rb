@@ -20,6 +20,9 @@ class Board < ActiveRecord::Base
 
   def set_board_attributes(params)
     self.name = params[:name]
+    self.user_ids = params[:user_attributes].map do |hash|
+      hash[:user_id]
+    end
   end
 
 

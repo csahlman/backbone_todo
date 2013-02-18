@@ -16,7 +16,7 @@ Failboat.Models.Board = Backbone.Model.extend({
   toJSON: function() {
     var json = _.clone(this.attributes);
 
-    json.userAttributes = this.users.map(function(user) {
+    json.user_attributes = this.users.map(function(user) {
       return { user_id: user.id };
     });
 

@@ -1,6 +1,6 @@
 class UsersController < ApplicationController
   respond_to :json
-  before_filter :authenticate_user
+  before_filter :authenticate_user, only: [ :index ]
 
   def create
     @user = User.new(params[:user])

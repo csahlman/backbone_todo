@@ -25,6 +25,8 @@ class User < ActiveRecord::Base
 
   has_many :comments
 
+  before_save :downcase_email
+
   def is_board_admin?(board_id)
     board_users.find_by_user_id(user_id).admin?
   end
@@ -33,6 +35,10 @@ class User < ActiveRecord::Base
     
     def create_remember_token
       self.remember_token = SecureRandom.urlsafe_base64
+    end
+
+    def downcase_email
+      self.email = email.downcase
     end
 
 end
