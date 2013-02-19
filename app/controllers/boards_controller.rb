@@ -9,7 +9,9 @@ class BoardsController < ApplicationController
   end
 
   def create
-    respond_with current_user.boards.create(params[:board])
+    @board = current_user.boards.create(params[:board])
+    @board.board_users.first.update_attribute(:board_admin, true)
+    respond_with @board
   end
 
   def show
@@ -36,7 +38,7 @@ class BoardsController < ApplicationController
     end
 
     def boards_visible_to_current_user
-      current_user.boards
+      current_user.boards.includes(:board_users, :tasks)
     end
 
     def user_id_and_email_attributes

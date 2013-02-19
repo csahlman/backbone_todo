@@ -16,7 +16,7 @@ Failboat.Views.Board = Backbone.Marionette.ItemView.extend({
 
   render: function() {
     var board_id = this.model.get('id');
-    var board_admin = this.model.users.isBoardAdmin(Failboat.currentUser.get('id'));
+    var board_admin = this.model.get('current_user_admin');
     var name = this.model.escape('name');
     this.$el.html(this.template({
       name: name, 

@@ -26,6 +26,14 @@ Failboat.Models.Board = Backbone.Model.extend({
 
   parseTasks: function() {
     this.tasks.reset(this.get('tasks'));
+  },
+
+  isBoardAdmin: function(user_id) {
+    var user = this.users.get(user_id);
+    if(user && user.boardAdmin()) {
+      return true
+    }
+    return false
   }
 
 

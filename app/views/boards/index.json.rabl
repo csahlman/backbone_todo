@@ -1,3 +1,5 @@
 collection @boards
+attributes :id, :name, :updated_at, :created_at
 
-extends "boards/show"
+node(:current_user_admin) { |board| board.is_board_admin?(current_user) }
+
