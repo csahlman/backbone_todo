@@ -5,10 +5,7 @@ Failboat.Models.Board = Backbone.Model.extend({
     this.on("change:tasks", this.parseTasks);
     this.on("change:users", this.parseUsers);
     this.tasks = new Failboat.Collections.Tasks();
-    this.users = new Failboat.Collections.Users([], {
-      board_id: this.id
-    });
-    this.users.fetch();
+    this.users = new Failboat.Collections.Users();
     this.parseUsers();
     this.parseTasks();
   },

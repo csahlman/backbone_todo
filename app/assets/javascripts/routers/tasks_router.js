@@ -46,6 +46,7 @@ Failboat.Routers.Tasks = Failboat.SwappingRouter.extend({
       return false;
     }
     var self = this;
+    this.boardsCollection.fetch();
     var boardView = new Failboat.Views.BoardsIndex({
       model: Failboat.currentUser, 
       collection: this.boardsCollection

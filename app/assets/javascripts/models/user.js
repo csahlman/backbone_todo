@@ -3,6 +3,10 @@ Failboat.Models.User = Backbone.Model.extend({
     var base = "users"
     // if(this.isNew()) return base;
     return base + '/' + this.get('remember_token');
+  },
+
+  boardAdmin: function() {
+    return this.get('board_admin');
   }
 
 });

@@ -25,5 +25,9 @@ class Board < ActiveRecord::Base
     end
   end
 
+  def is_board_admin?(user)
+    self.board_users.find_by_user_id(user.id).board_admin?
+  end
+
 
 end

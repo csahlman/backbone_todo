@@ -15,10 +15,12 @@ class TasksController < ApplicationController
   end
 
   def create
-    @task = current_user.tasks.build
+    @board = current_user.boards.find(params[:board_id])
+    @task = @board.tasks.build
     @task.set_task_attributes(params)
     @task.save!
-    @task.users = [current_user]
+    @task.users = @board.users
+    @task.set_task_admin(current_user)
     respond_with @task
   end
 

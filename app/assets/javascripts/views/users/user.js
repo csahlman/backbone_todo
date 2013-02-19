@@ -17,7 +17,7 @@ Failboat.Views.User = Backbone.Marionette.ItemView.extend({
   render: function() {
     this.$el.html(this.template({
       email: this.model.escape('email'),
-      id: this.model.get('id')
+      board_admin: this.model.boardAdmin()
     }));
     return this;
   }

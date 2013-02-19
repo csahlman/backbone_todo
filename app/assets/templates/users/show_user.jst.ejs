@@ -1,1 +1,7 @@
-<%= email %> <%= id %>
+<%= email %> 
+
+<% if(board_admin) { %>
+<span title="current" class="label label-info tip-left">
+  Admin
+</span>
+<% } %>

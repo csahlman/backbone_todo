@@ -2,12 +2,12 @@
 #
 # Table name: board_users
 #
-#  id         :integer          not null, primary key
-#  user_id    :integer
-#  board_id   :integer
-#  admin      :boolean
-#  created_at :datetime         not null
-#  updated_at :datetime         not null
+#  id          :integer          not null, primary key
+#  user_id     :integer
+#  board_id    :integer
+#  board_admin :boolean
+#  created_at  :datetime         not null
+#  updated_at  :datetime         not null
 #
 
 class BoardUser < ActiveRecord::Base

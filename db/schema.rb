@@ -11,14 +11,14 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20130212162126) do
+ActiveRecord::Schema.define(:version => 20130219110037) do
 
   create_table "board_users", :force => true do |t|
     t.integer  "user_id"
     t.integer  "board_id"
-    t.boolean  "admin"
-    t.datetime "created_at", :null => false
-    t.datetime "updated_at", :null => false
+    t.boolean  "board_admin"
+    t.datetime "created_at",  :null => false
+    t.datetime "updated_at",  :null => false
   end
 
   create_table "boards", :force => true do |t|
@@ -38,9 +38,9 @@ ActiveRecord::Schema.define(:version => 20130212162126) do
   create_table "task_users", :force => true do |t|
     t.integer  "user_id"
     t.integer  "task_id"
-    t.boolean  "board_admin"
-    t.datetime "created_at",  :null => false
-    t.datetime "updated_at",  :null => false
+    t.boolean  "task_admin"
+    t.datetime "created_at", :null => false
+    t.datetime "updated_at", :null => false
   end
 
   create_table "tasks", :force => true do |t|

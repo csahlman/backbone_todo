@@ -2,12 +2,12 @@
 #
 # Table name: task_users
 #
-#  id          :integer          not null, primary key
-#  user_id     :integer
-#  task_id     :integer
-#  board_admin :boolean
-#  created_at  :datetime         not null
-#  updated_at  :datetime         not null
+#  id         :integer          not null, primary key
+#  user_id    :integer
+#  task_id    :integer
+#  task_admin :boolean
+#  created_at :datetime         not null
+#  updated_at :datetime         not null
 #
 
 class TaskUser < ActiveRecord::Base
