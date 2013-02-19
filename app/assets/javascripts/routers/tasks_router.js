@@ -14,26 +14,34 @@ Failboat.Routers.Tasks = Failboat.SwappingRouter.extend({
     this.el = $('#content');
     this.boardsCollection = options.boards;
     this.users = options.users;
+    this.currentViews = [];
   },
 
   signIn: function() {
+    this.closeViews();
     var signInView = new Failboat.Views.Signup({});
-    this.swap(signInView);
+    this.currentViews = [signInView];
+    $(this.el).append(signInView.render().el);
   },
 
   logIn: function() {
+    this.closeViews();
     var loginView = new Failboat.Views.Login({});
-    this.swap(loginView);
+    this.currentViews = [loginView];
+    $(this.el).append(loginView.render().el);
   },
 
   signOut: function() {
     Failboat.session.destroy();
+    this.closeViews();
     var loginView = new Failboat.Views.Login({});
-    this.swap(loginView);
+    this.currentViews = [loginView];
+    $(this.el).append(loginView.render().el);
     this.navigate('log_in', false);
   },
 
   index: function() {
+    this.closeViews();
     if(!Failboat.session.authenticated()) {
       this.navigate('sign_in', true);
       return false;
@@ -43,12 +51,13 @@ Failboat.Routers.Tasks = Failboat.SwappingRouter.extend({
       model: Failboat.currentUser, 
       collection: this.boardsCollection
     });
+    this.currentViews = [boardView];
     if(Failboat.currentUser.get('email')) {
-      this.swap(boardView);
+      $(this.el).empty().append(boardView.render().el)
     } else {
       Failboat.currentUser.fetch({
         success: function() {
-          self.swap(boardView);
+          $(self.el).empty().append(boardView.render().el);
         }
       });
     }
@@ -59,6 +68,7 @@ Failboat.Routers.Tasks = Failboat.SwappingRouter.extend({
       this.navigate('sign_in', true);
       return false;
     }
+    this.closeViews();
     var self = this;
     this.board = this.boardsCollection.get(id);
     var boardShowView = new Failboat.Views.BoardShow({
@@ -73,9 +83,10 @@ Failboat.Routers.Tasks = Failboat.SwappingRouter.extend({
           collection: self.board.users,
           model: self.board
         });
-        self.swap(boardShowView);
+        $(self.el).empty().append(boardShowView.render().el);
         boardShowView.list.show(tasksCollectionView);
         boardShowView.users.show(usersCollectionView);
+        self.currentViews = [usersCollectionView, tasksCollectionView, boardShowView];
       }
     });
   },
@@ -85,6 +96,7 @@ Failboat.Routers.Tasks = Failboat.SwappingRouter.extend({
       this.navigate('sign_in', true);
       return false;
     }
+    this.closeViews();
     var self = this;
     this.board = this.boardsCollection.get(boardId);
     this.board.fetch({
@@ -101,8 +113,9 @@ Failboat.Routers.Tasks = Failboat.SwappingRouter.extend({
             var commentsCollectionView = new Failboat.Views.CommentCollectionView({
               collection: self.task.comments
             });
-            self.swap(taskView);
+            $(self.el).empty().append(taskView.render().el);
             taskView.comments.show(commentsCollectionView);
+            self.currentViews = [taskView, commentsCollectionView];
           }
         });
       }

@@ -10,6 +10,13 @@ _.extend(Failboat.SwappingRouter.prototype, Backbone.Router.prototype, {
     }
     this.currentView = newView;
     $(this.el).empty().append(this.currentView.render().el);
+  },
+
+  closeViews: function() {
+    _.each(this.currentViews, function(view) {
+        if(view.close) view.close();
+    });
   }
 });
+
 Failboat.SwappingRouter.extend = Backbone.Router.extend;
