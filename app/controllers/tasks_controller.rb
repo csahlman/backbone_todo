@@ -18,8 +18,8 @@ class TasksController < ApplicationController
     @board = current_user.boards.find(params[:board_id])
     @task = @board.tasks.build
     @task.set_task_attributes(params)
-    @task.save!
     @task.users = @board.users
+    @task.save!
     @task.set_task_admin(current_user)
     respond_with @task
   end

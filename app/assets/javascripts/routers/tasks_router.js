@@ -115,10 +115,15 @@ Failboat.Routers.Tasks = Failboat.SwappingRouter.extend({
             var commentsCollectionView = new Failboat.Views.CommentCollectionView({
               collection: self.task.comments
             });
+            var usersCollectionView = new Failboat.Views.UsersIndex({
+              collection: self.task.users,
+              model: self.board
+            });
             $(self.el).html(taskView.render().el);
             taskView.comments.show(commentsCollectionView);
+            taskView.users.show(usersCollectionView);
             self.closeViews();
-            self.currentViews = [taskView, commentsCollectionView];
+            self.currentViews = [taskView, commentsCollectionView, usersCollectionView];
           }
         });
       }

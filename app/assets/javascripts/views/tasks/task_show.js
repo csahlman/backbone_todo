@@ -5,7 +5,8 @@ Failboat.Views.TaskShow = Backbone.Marionette.Layout.extend({
   // model: Failboat.Models.Task,
 
   regions: {
-    comments: '#comments'
+    comments: '#comments',
+    users: '#user_div'
   },
 
   events: {

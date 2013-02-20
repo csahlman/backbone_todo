@@ -20,7 +20,7 @@
     <div class="span12 center">
       <div class="row-fluid" id="main">
         <!-- this is where we put the yield content -->
-        <div class="span6" id="task_div">
+        <div class="span4" id="task_div">
           <div class="widget-box">
             <div class="widget-title">
               <h5><%= name %></h5>
@@ -49,7 +49,20 @@
             </div> <!-- widget-content -->   
           </div> <!-- widget-box -->
         </div> <!-- span6 -->
-        <div class="span6" id="comment_div">
+        <div class="span4" id="user_div">
+          <div class="widget-box">
+            <div class="widget-title">
+              <h5>User Information</h5>
+            </div> <!-- widget-title -->
+            <div class="widget-content nopadding">
+
+              <h3 id="comment">Users Assigned</h3>
+              <ul class="recent-comments" id="users">
+              </ul>
+            </div> <!-- widget-content -->
+          </div> <!-- widget-box -->
+        </div> <!-- span6 -->
+        <div class="span4" id="comment_div">
           <div class="widget-box">
             <div class="widget-title">
               <h5>Task information</h5>

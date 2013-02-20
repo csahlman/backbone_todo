@@ -15,13 +15,19 @@ Failboat.Models.Task = Backbone.Model.extend({
   },
 
   initialize: function() {
-    this.on('change:comments', this.parseComments);
+    this.on('change:comments', this.parseComments, this);
+    this.on('change:users', this.parseUsers, this);
+    this.parseUsers();
     this.parseComments();
   },
 
   parseComments: function() {
     this.comments = new Failboat.Collections.Comments(this.get('comments'));
     // console.log('parseComments');
+  },
+
+  parseUsers: function() {
+    this.users = new Failboat.Collections.Users(this.get('users'));
   },
 
   toggle: function() {
