@@ -19,14 +19,14 @@ Failboat.Routers.Tasks = Failboat.SwappingRouter.extend({
 
   signIn: function() {
     var signInView = new Failboat.Views.Signup({});
-    $(this.el).append(signInView.render().el);
+    $(this.el).html(signInView.render().el);
     this.closeViews();
     this.currentViews = [signInView];
   },
 
   logIn: function() {
     var loginView = new Failboat.Views.Login({});
-    $(this.el).append(loginView.render().el);
+    $(this.el).html(loginView.render().el);
     this.closeViews();
     this.currentViews = [loginView];
   },
@@ -34,7 +34,7 @@ Failboat.Routers.Tasks = Failboat.SwappingRouter.extend({
   signOut: function() {
     Failboat.session.destroy();
     var loginView = new Failboat.Views.Login({});
-    $(this.el).append(loginView.render().el);
+    $(this.el).html(loginView.render().el);
     this.closeViews();
     this.currentViews = [loginView];
     this.navigate('log_in', false);

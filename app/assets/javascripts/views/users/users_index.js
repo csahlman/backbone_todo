@@ -12,6 +12,7 @@ Failboat.Views.UsersIndex = Backbone.Marionette.CompositeView.extend({
   itemView: Failboat.Views.User,
 
   events: {
+    "keyup #searchUserForm": "search",
     "submit #add_users_form": "addUserToBoard"
   },
 
@@ -35,7 +36,10 @@ Failboat.Views.UsersIndex = Backbone.Marionette.CompositeView.extend({
     } else {
       console.log('creating new user');
     }
+  },
 
+  search: function() {
+    var letters = $('#searchUserForm').val();
   }
   
 });

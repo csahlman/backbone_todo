@@ -10,6 +10,14 @@ Failboat.Collections.Users = Backbone.Collection.extend({
     var base = "/users"
     // if(this.board_id) return base + '?board_id=' + this.board_id
     return base;
+  },
+
+  search: function(letters) {
+    if(letters == "") return this;
+    var pattern = new RegExp(letters, 'gi');
+    return _(this.filter(function(data) {
+      return pattern.test(data.get('email'));
+    }));
   }
 
 });
