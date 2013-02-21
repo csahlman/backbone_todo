@@ -14,5 +14,7 @@
  *= require select2
  *= require unicorn.main
  *= require unicorn.blue
+ *= require visualsearch
+ *= require jquery-ui
  *= require custom
  */

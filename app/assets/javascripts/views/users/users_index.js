@@ -12,8 +12,8 @@ Failboat.Views.UsersIndex = Backbone.Marionette.CompositeView.extend({
   itemView: Failboat.Views.User,
 
   events: {
-    "keyup #searchUserForm": "search",
-    "submit #add_users_form": "addUserToBoard"
+    "submit #add_users_form": "addUserToBoard",
+    "focus #user_email": "getAutocomplete"
   },
 
   // appendHtml: function(collectionView, itemView, index){
@@ -21,7 +21,8 @@ Failboat.Views.UsersIndex = Backbone.Marionette.CompositeView.extend({
   // },
 
   initialize: function() {
-
+    this.userEmails = Failboat.users.pluck('email');
+    console.log(this.userEmails);
   },
 
   addUserToBoard: function(event) {
@@ -33,13 +34,18 @@ Failboat.Views.UsersIndex = Backbone.Marionette.CompositeView.extend({
       this.model.save();
     } else if (user) {
       console.log('user is already assigned to this board');
-    } else {
       console.log('creating new user');
     }
   },
 
   search: function() {
     var letters = $('#searchUserForm').val();
+  },
+
+  getAutocomplete: function() {
+    $("#user_email").autocomplete({ //Line 30
+      source : this.userEmails
+    });
   }
   
 });

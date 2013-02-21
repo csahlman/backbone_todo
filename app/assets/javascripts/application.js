@@ -13,10 +13,14 @@
 //= require jquery
 //= require jquery.cookie
 //= require jquery_ujs
+//= require jquery.ui.core
+//= require jquery.ui.position
+//= require jquery.ui.widget
+//= require jquery.ui.menu
+//= require jquery.ui.autocomplete
 //= require twitter/bootstrap
 //= require underscore
 //= require backbone
-//= require backbone-relational
 //= require backbone.marionette
 //= require failboat
 //= require_tree ./support
