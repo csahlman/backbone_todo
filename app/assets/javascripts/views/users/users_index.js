@@ -22,7 +22,6 @@ Failboat.Views.UsersIndex = Backbone.Marionette.CompositeView.extend({
 
   initialize: function() {
     this.userEmails = Failboat.users.pluck('email');
-    console.log(this.userEmails);
   },
 
   addUserToBoard: function(event) {
@@ -32,6 +31,7 @@ Failboat.Views.UsersIndex = Backbone.Marionette.CompositeView.extend({
     if(user && !this.collection.get(user.id)) {
       this.model.users.add(user);
       this.model.save();
+      $('#user_email').val('');
     } else if (user) {
       console.log('user is already assigned to this board');
       console.log('creating new user');

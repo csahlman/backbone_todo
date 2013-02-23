@@ -103,12 +103,7 @@ Failboat.Routers.Tasks = Failboat.SwappingRouter.extend({
     this.board = this.boardsCollection.get(boardId);
     this.board.fetch({
       success: function() {
-        var tasks = self.board.tasks;
-        tasks.each(function(task) {
-          if(task.get('id') == id) {
-            self.task = task;
-          }
-        });
+        self.task = self.board.tasks.get(id);
         var taskView = new Failboat.Views.TaskShow({model: self.task});
         self.task.fetch({
           success: function() {
