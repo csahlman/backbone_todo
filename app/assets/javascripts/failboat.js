@@ -4,15 +4,7 @@ window.Failboat = {
   Views: {},
   Routers: {},
   initialize: function(data) {
-    // this.visualSearch = VS.init({
-    //   container: $('.visual_search'),
-    //   query: '',
-    //   callbacks : {
-    //     search       : function(query, searchCollection) {},
-    //     facetMatches : function(callback) {},
-    //     valueMatches : function(facet, searchTerm, callback) {}
-    //   }
-    // });
+
     this.session = new Failboat.Models.Session();
     this.boards = new Failboat.Collections.Boards(data.boards);
     this.users = new Failboat.Collections.Users(data.users);
